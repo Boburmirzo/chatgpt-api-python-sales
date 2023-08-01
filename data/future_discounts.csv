@@ -1,0 +1,11 @@
+ship_date,ship_mode,country,city,state,postal_code,region,product_id,category,sub_category,brand,product_name,currency,actual_price,discount_price,discount_percentage,address
+2024-05-16,Second Class,USA,Los Angeles,IL,81818,East,1424,Footwear,Men Shoes,Addidas,Running Shoes,USD,57.81,50.29,13,321 Oak St
+2024-08-16,Standard Class,USA,New York,NY,71317,South,6413,Footwear,Men Shoes,Addidas,Casual Shoes,USD,136.7,117.56,14,100 Pine St
+2023-11-06,First Class,USA,New York,CA,80501,West,4692,Footwear,Women Shoes,Nike,Casual Shoes,GBP,128.09,115.28,10,123 Main St
+2024-06-11,Standard Class,USA,Los Angeles,IL,36238,Central,3781,Footwear,Men Shoes,Addidas,Running Shoes,EUR,66.28,47.06,29,100 Pine St
+2024-06-02,Standard Class,USA,Los Angeles,NY,66777,East,9776,Footwear,Men Shoes,Addidas,Running Shoes,USD,95.45,69.68,27,321 Oak St
+2023-09-10,Same Day,USA,Los Angeles,NY,90111,East,5635,Footwear,Men Shoes,Nike,Running Shoes,EUR,167.92,124.26,26,456 Market St
+2024-01-28,First Class,USA,Los Angeles,IL,92046,South,9622,Footwear,Women Shoes,Puma,Formal Shoes,EUR,113.23,103.04,9,789 Elm St
+2024-03-12,Same Day,USA,San Francisco,IL,47869,East,1006,Footwear,Men Shoes,Nike,Formal Shoes,EUR,164.89,146.75,11,789 Elm St
+2024-04-23,Second Class,USA,New York,CA,77696,South,7496,Footwear,Women Shoes,Puma,Formal Shoes,GBP,97.95,88.16,10,456 Market St
+2023-09-04,Second Class,USA,San Francisco,IL,39928,South,7548,Footwear,Women Shoes,Reebok,Running Shoes,EUR,191.34,174.12,9,123 Main St
