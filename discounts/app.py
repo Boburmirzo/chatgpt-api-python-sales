@@ -1,8 +1,9 @@
 import os
 
 import pathway as pw
-from model_wrappers import OpenAIChatGPTModel, OpenAIEmbeddingModel
 from pathway.stdlib.ml.index import KNNIndex
+
+from llm_app.model_wrappers import OpenAIChatGPTModel, OpenAIEmbeddingModel
 
 
 class DiscountsInputSchema(pw.Schema):
@@ -29,18 +30,6 @@ class QueryInputSchema(pw.Schema):
     query: str
     user: str
 
-
-HTTP_HOST = os.environ.get("PATHWAY_REST_CONNECTOR_HOST", "127.0.0.1")
-HTTP_PORT = os.environ.get("PATHWAY_REST_CONNECTOR_PORT", "8080")
-
-API_KEY = os.environ.get("OPENAI_API_TOKEN")
-EMBEDDER_LOCATOR = "text-embedding-ada-002"
-EMBEDDING_DIMENSION = 1536
-
-MODEL_LOCATOR = "gpt-3.5-turbo" # Change to 'gpt-4' if you have access.
-TEMPERATURE = 0.0
-MAX_TOKENS = 200
-
 def concat_with_titles(*args) -> str:
     titles = [
         "country",
@@ -64,11 +53,23 @@ def concat_with_titles(*args) -> str:
     combined = [f"{title}: {value}" for title, value in zip(titles, args)]
     return ', '.join(combined)
 
-def run():
-    embedder = OpenAIEmbeddingModel(api_key=API_KEY)
+def run(
+    *,
+    data_dir: str = os.environ.get("PATHWAY_DATA_DIR", "./data/"),
+    api_key: str = os.environ.get("OPENAI_API_TOKEN", ""),
+    host: str = "0.0.0.0",
+    port: int = 8080,
+    embedder_locator: str = "text-embedding-ada-002",
+    embedding_dimension: int = 1536,
+    model_locator: str = "gpt-3.5-turbo",
+    max_tokens: int = 200,
+    temperature: int = 0.0,
+    **kwargs,
+):
+    embedder = OpenAIEmbeddingModel(api_key=api_key)
 
     sales_data = pw.io.csv.read(
-        "../data/",
+        data_dir,
         schema=DiscountsInputSchema,
         mode="streaming",
         autocommit_duration_ms=50,
@@ -96,20 +97,20 @@ def run():
     )
 
     enriched_data = combined_data + combined_data.select(
-        data=embedder.apply(text=combined_data.doc, locator=EMBEDDER_LOCATOR)
+        data=embedder.apply(text=combined_data.doc, locator=embedder_locator)
     )
 
-    index = KNNIndex(enriched_data, d=EMBEDDING_DIMENSION)
+    index = KNNIndex(enriched_data, d=embedding_dimension)
 
     query, response_writer = pw.io.http.rest_connector(
-        host=HTTP_HOST,
-        port=int(HTTP_PORT),
+        host=host,
+        port=port,
         schema=QueryInputSchema,
         autocommit_duration_ms=50,
     )
 
     query += query.select(
-        data=embedder.apply(text=pw.this.query, locator=EMBEDDER_LOCATOR),
+        data=embedder.apply(text=pw.this.query, locator=embedder_locator),
     )
 
     query_context = index.query(query, k=3).select(
@@ -126,21 +127,22 @@ def run():
         prompt=build_prompt(pw.this.local_indexed_data_list, pw.this.query)
     )
 
-    model = OpenAIChatGPTModel(api_key=API_KEY)
+    model = OpenAIChatGPTModel(api_key=api_key)
 
     responses = prompt.select(
         query_id=pw.this.id,
         result=model.apply(
             pw.this.prompt,
-            locator=MODEL_LOCATOR,
-            temperature=TEMPERATURE,
-            max_tokens=MAX_TOKENS,
+            locator=model_locator,
+            temperature=temperature,
+            max_tokens=max_tokens,
         ),
     )
 
     response_writer(responses)
 
     pw.run()
+
 
 if __name__ == "__main__":
     run()

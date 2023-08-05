@@ -3,3 +3,5 @@ openai
 requests
 diskcache
 python-dotenv
+pandas
+datetime
