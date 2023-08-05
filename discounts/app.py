@@ -1,5 +1,3 @@
-import os
-
 import pathway as pw
 from pathway.stdlib.ml.index import KNNIndex
 
@@ -55,8 +53,8 @@ def concat_with_titles(*args) -> str:
 
 def run(
     *,
-    data_dir: str = os.environ.get("PATHWAY_DATA_DIR", "./data/"),
-    api_key: str = os.environ.get("OPENAI_API_TOKEN", ""),
+    data_dir: str = "./data/",
+    api_key: str = "{OPENAI_API_KEY}",
     host: str = "0.0.0.0",
     port: int = 8080,
     embedder_locator: str = "text-embedding-ada-002",
