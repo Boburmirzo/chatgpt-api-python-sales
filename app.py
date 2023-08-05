@@ -1,3 +1,4 @@
+from datetime import datetime
 import pathway as pw
 from pathway.stdlib.ml.index import KNNIndex
 
@@ -5,8 +6,7 @@ from llm_app.model_wrappers import OpenAIChatGPTModel, OpenAIEmbeddingModel
 
 
 class DiscountsInputSchema(pw.Schema):
-    ship_date: str
-    ship_mode: str
+    discount_until: str
     country: str
     city: str
     state: str
@@ -32,7 +32,7 @@ def concat_with_titles(*args) -> str:
     titles = [
         "country",
         "city",
-        "ship_mode",
+        "discount_until",
         "state",
         "product_id",
         "postal_code",
@@ -77,7 +77,7 @@ def run(
         doc=pw.apply(concat_with_titles,
                            pw.this.country,
                            pw.this.city,
-                           pw.this.ship_mode,
+                           pw.this.discount_until,
                            pw.this.state,
                            pw.this.product_id,
                            pw.this.postal_code,
@@ -90,8 +90,7 @@ def run(
                            pw.this.discount_price,
                            pw.this.discount_percentage,
                            pw.this.address,
-                           pw.this.currency,
-                           pw.this.ship_date),
+                           pw.this.currency),
     )
 
     enriched_data = combined_data + combined_data.select(
@@ -118,7 +117,7 @@ def run(
     @pw.udf
     def build_prompt(local_indexed_data, query):
         docs_str = "\n".join(local_indexed_data)
-        prompt = f"Given the following discounts data: \n {docs_str} \nanswer this query: {query} and clean the output"
+        prompt = f"Given the following discounts data: \n {docs_str} \nanswer this query: {query}, Assume that current date is: {datetime.now()}. and clean the output"
         return prompt
 
     prompt = query_context.select(

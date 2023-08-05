@@ -1,11 +1,11 @@
-ship_date,ship_mode,country,city,state,postal_code,region,product_id,category,sub_category,brand,product_name,currency,actual_price,discount_price,discount_percentage,address
-2024-07-30,Standard Class,USA,San Francisco,CA,11052,West,6676,Footwear,Women Shoes,Puma,Running Shoes,GBP,181.36,130.58,28,456 Market St
-2023-11-06,Second Class,USA,Los Angeles,IL,32676,Central,5578,Footwear,Women Shoes,Addidas,Casual Shoes,USD,114.64,95.15,17,123 Main St
-2024-03-10,Standard Class,USA,San Francisco,IL,98111,Central,1125,Footwear,Women Shoes,Puma,Casual Shoes,EUR,71.37,52.1,27,321 Oak St
-2024-07-22,Second Class,USA,San Francisco,NY,81102,West,4337,Footwear,Women Shoes,Reebok,Casual Shoes,USD,176.46,167.64,5,789 Elm St
-2024-03-31,First Class,USA,New York,NY,91237,West,6485,Footwear,Women Shoes,Reebok,Running Shoes,USD,178.37,151.61,15,456 Market St
-2024-04-14,First Class,USA,San Francisco,NY,36231,West,2980,Footwear,Women Shoes,Reebok,Casual Shoes,EUR,107.12,74.98,30,456 Market St
-2023-08-31,First Class,USA,Los Angeles,CA,62523,South,4938,Footwear,Women Shoes,Nike,Running Shoes,EUR,173.0,160.89,7,321 Oak St
-2024-01-08,Second Class,USA,Los Angeles,CA,78754,South,6228,Footwear,Women Shoes,Puma,Running Shoes,EUR,65.26,59.39,9,456 Market St
-2023-11-20,Same Day,USA,Los Angeles,IL,30916,West,6535,Footwear,Men Shoes,Reebok,Casual Shoes,GBP,52.76,43.26,18,789 Elm St
-2024-03-16,Standard Class,USA,New York,IL,27224,West,3811,Footwear,Men Shoes,Puma,Running Shoes,USD,160.88,146.4,9,321 Oak St
+discount_until,country,city,state,postal_code,region,product_id,category,sub_category,brand,product_name,currency,actual_price,discount_price,discount_percentage,address
+2024-07-14,USA,San Francisco,CA,49012,Central,9918,Footwear,Women Shoes,Puma,Formal Shoes,EUR,132.86,99.65,25,100 Pine St
+2024-02-05,USA,San Francisco,CA,54711,Central,4802,Footwear,Men Shoes,Puma,Running Shoes,GBP,73.23,59.32,19,321 Oak St
+2023-11-13,USA,New York,IL,83143,Central,8774,Footwear,Women Shoes,Addidas,Running Shoes,GBP,104.22,89.63,14,789 Elm St
+2024-04-25,USA,San Francisco,NY,93925,South,3790,Footwear,Women Shoes,Addidas,Running Shoes,EUR,123.21,117.05,5,100 Pine St
+2023-10-23,USA,San Francisco,NY,12561,East,9535,Footwear,Men Shoes,Puma,Running Shoes,EUR,197.81,185.94,6,321 Oak St
+2023-10-09,USA,New York,NY,47928,South,2180,Footwear,Women Shoes,Nike,Casual Shoes,EUR,66.24,50.34,24,100 Pine St
+2023-09-12,USA,Los Angeles,CA,28372,South,8769,Footwear,Women Shoes,Puma,Running Shoes,EUR,83.65,61.9,26,321 Oak St
+2024-03-29,USA,Los Angeles,IL,94442,West,3932,Footwear,Women Shoes,Puma,Running Shoes,GBP,97.1,80.59,17,789 Elm St
+2024-03-19,USA,New York,CA,86925,East,4593,Footwear,Men Shoes,Puma,Casual Shoes,USD,71.98,61.9,14,789 Elm St
+2024-04-22,USA,San Francisco,NY,31508,West,4997,Footwear,Women Shoes,Reebok,Casual Shoes,GBP,80.24,60.98,24,100 Pine St
