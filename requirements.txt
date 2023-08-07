@@ -1,5 +1,4 @@
 pathway
-openai
-requests
-diskcache
-python-dotenv
+pandas
+datetime
+llm_app
