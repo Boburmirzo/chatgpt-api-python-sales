@@ -4,7 +4,7 @@ from pathway.stdlib.ml.index import KNNIndex
 
 from llm_app.model_wrappers import OpenAIChatGPTModel, OpenAIEmbeddingModel
 
-
+# Maps each data row into a structured document schema using Pathway
 class DiscountsInputSchema(pw.Schema):
     discount_until: str
     country: str
@@ -66,6 +66,7 @@ def run(
 ):
     embedder = OpenAIEmbeddingModel(api_key=api_key)
 
+    # Real-time data coming from external data sources such csv file
     sales_data = pw.io.csv.read(
         data_dir,
         schema=DiscountsInputSchema,
@@ -73,6 +74,7 @@ def run(
         autocommit_duration_ms=50,
     )
 
+    # Documents are split into short, mostly self-contained sections
     combined_data = sales_data.select(
         doc=pw.apply(concat_with_titles,
                            pw.this.country,
@@ -93,12 +95,15 @@ def run(
                            pw.this.currency),
     )
 
+    # Each section is embedded with the OpenAI Embeddings API and retrieve the embedded result
     enriched_data = combined_data + combined_data.select(
         data=embedder.apply(text=combined_data.doc, locator=embedder_locator)
     )
 
+    # Constructs an index on the generated embeddings in real-time
     index = KNNIndex(enriched_data, d=embedding_dimension)
 
+    # Given a user question as a query from your API
     query, response_writer = pw.io.http.rest_connector(
         host=host,
         port=port,
@@ -106,14 +111,17 @@ def run(
         autocommit_duration_ms=50,
     )
 
+    # Generates an embedding for the query from the OpenAI Embeddings API
     query += query.select(
         data=embedder.apply(text=pw.this.query, locator=embedder_locator),
     )
 
+    # Using the embeddings, retrieve the vector index by relevance to the query
     query_context = index.query(query, k=3).select(
         pw.this.query, local_indexed_data_list=pw.this.result
     )
 
+    # Inserts the question and the most relevant sections into a message to OpenAI Chat Completion API
     @pw.udf
     def build_prompt(local_indexed_data, query):
         docs_str = "\n".join(local_indexed_data)
@@ -136,6 +144,7 @@ def run(
         ),
     )
 
+    # Returns ChatGPT's answer
     response_writer(responses)
 
     pw.run()
