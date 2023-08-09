@@ -145,10 +145,10 @@ python discounts-data-generator.py
 
 ### Step 5: Run and start to use it
 
-You start the application by navigating to `llm_app` folder and run `main.py`:
+You start the application by navigating to `llm_app` folder and run `app.py`:
 
 ```bash
-python app.py
+python ./example/app.py
 ```
 
 When the application runs successfully, you should see output something like this:

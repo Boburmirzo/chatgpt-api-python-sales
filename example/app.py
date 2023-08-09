@@ -1,55 +1,9 @@
 from datetime import datetime
 import pathway as pw
 from pathway.stdlib.ml.index import KNNIndex
-
 from llm_app.model_wrappers import OpenAIChatGPTModel, OpenAIEmbeddingModel
-
-# Maps each data row into a structured document schema using Pathway
-class DiscountsInputSchema(pw.Schema):
-    discount_until: str
-    country: str
-    city: str
-    state: str
-    postal_code: str
-    region: str
-    product_id: str
-    category: str
-    sub_category: str
-    brand: str
-    product_name: str
-    currency: str
-    actual_price: str
-    discount_price: str
-    discount_percentage: str
-    address: str
-
-
-class QueryInputSchema(pw.Schema):
-    query: str
-    user: str
-
-def concat_with_titles(*args) -> str:
-    titles = [
-        "country",
-        "city",
-        "discount_until",
-        "state",
-        "product_id",
-        "postal_code",
-        "region",
-        "category",
-        "sub_category",
-        "brand",
-        "product_name",
-        "actual_price",
-        "discount_price",
-        "discount_percentage",
-        "address",
-        "currency",
-        "ship_date",
-    ]
-    combined = [f"{title}: {value}" for title, value in zip(titles, args)]
-    return ', '.join(combined)
+from schemas import DiscountsInputSchema, QueryInputSchema
+from transform import transform_data
 
 def run(
     *,
@@ -74,30 +28,12 @@ def run(
         autocommit_duration_ms=50,
     )
 
-    # Documents are split into short, mostly self-contained sections
-    combined_data = sales_data.select(
-        doc=pw.apply(concat_with_titles,
-                           pw.this.country,
-                           pw.this.city,
-                           pw.this.discount_until,
-                           pw.this.state,
-                           pw.this.product_id,
-                           pw.this.postal_code,
-                           pw.this.region,
-                           pw.this.category,
-                           pw.this.sub_category,
-                           pw.this.brand,
-                           pw.this.product_name,
-                           pw.this.actual_price,
-                           pw.this.discount_price,
-                           pw.this.discount_percentage,
-                           pw.this.address,
-                           pw.this.currency),
-    )
+    # Data source rows transformed into structured documents
+    documents = transform_data(sales_data)
 
     # Each section is embedded with the OpenAI Embeddings API and retrieve the embedded result
-    enriched_data = combined_data + combined_data.select(
-        data=embedder.apply(text=combined_data.doc, locator=embedder_locator)
+    enriched_data = documents + documents.select(
+        data=embedder.apply(text=documents.doc, locator=embedder_locator)
     )
 
     # Constructs an index on the generated embeddings in real-time
