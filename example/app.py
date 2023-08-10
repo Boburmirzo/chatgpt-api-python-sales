@@ -24,10 +24,10 @@ def run(
     # Data source rows transformed into structured documents
     documents = Transform(sales_data)
 
-    # Each section is embedded with the OpenAI Embeddings API and retrieve the embedded result
+    # Compute embeddings for each document using the OpenAI Embeddings API
     embedded_data = Contextful(context=documents, data_to_embed=documents.doc)
 
-    # Constructs an index on the generated embeddings in real-time
+    # Construct an index on the generated embeddings in real-time
     index = KNNIndex(embedded_data, d=embedding_dimension)
 
     # Given a user question as a query from your API
@@ -38,18 +38,14 @@ def run(
         autocommit_duration_ms=50,
     )
 
-    # Generates an embedding for the query from the OpenAI Embeddings API
+    # Generate embeddings for the query from the OpenAI Embeddings API
     embedded_query = Contextful(context=query, data_to_embed=pw.this.query)
 
-    # Using the embeddings, retrieve the vector index by relevance to the query
-    query_context = index.query(embedded_query, k=3).select(
-        pw.this.query, local_indexed_data_list=pw.this.result
-    )
+    # Build prompt using indexed data
+    responses = Prompt(index, embedded_query, pw.this.query)
 
-    # Inserts the question and the most relevant sections into a message to OpenAI Chat Completion API
-    responses = Prompt(query_context)
-
-    # Returns ChatGPT's answer
+    # Feed the prompt to ChatGPT and obtain the generated answer.
     response_writer(responses)
 
+    # Run the pipeline
     pw.run()

@@ -26,7 +26,7 @@ def concat_with_titles(*args) -> str:
 
 
 def Transform(sales_data):
-    combined_data = sales_data.select(
+    return sales_data.select(
         doc=pw.apply(concat_with_titles,
                      pw.this.country,
                      pw.this.city,
@@ -45,4 +45,3 @@ def Transform(sales_data):
                      pw.this.address,
                      pw.this.currency),
     )
-    return combined_data
