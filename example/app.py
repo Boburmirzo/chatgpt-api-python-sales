@@ -1,25 +1,18 @@
 import pathway as pw
 
-from datetime import datetime
 from pathway.stdlib.ml.index import KNNIndex
-from llm_app.model_wrappers import OpenAIChatGPTModel, OpenAIEmbeddingModel
 from schemas import DiscountsInputSchema, QueryInputSchema
-from transform import transform_data
+from transform import Transform
+from embedder import Contextful
+from prompt import Prompt
 
 
 def run(
     data_dir,
-    api_key,
     host,
     port,
-    embedder_locator,
-    embedding_dimension,
-    model_locator,
-    max_tokens,
-    temperature
+    embedding_dimension
 ):
-    embedder = OpenAIEmbeddingModel(api_key=api_key)
-
     # Real-time data coming from external data sources such as csv file
     sales_data = pw.io.csv.read(
         data_dir,
@@ -29,15 +22,13 @@ def run(
     )
 
     # Data source rows transformed into structured documents
-    documents = transform_data(sales_data)
+    documents = Transform(sales_data)
 
     # Each section is embedded with the OpenAI Embeddings API and retrieve the embedded result
-    enriched_data = documents + documents.select(
-        data=embedder.apply(text=documents.doc, locator=embedder_locator)
-    )
+    embedded_data = Contextful(context=documents, data_to_embed=documents.doc)
 
     # Constructs an index on the generated embeddings in real-time
-    index = KNNIndex(enriched_data, d=embedding_dimension)
+    index = KNNIndex(embedded_data, d=embedding_dimension)
 
     # Given a user question as a query from your API
     query, response_writer = pw.io.http.rest_connector(
@@ -48,37 +39,15 @@ def run(
     )
 
     # Generates an embedding for the query from the OpenAI Embeddings API
-    query += query.select(
-        data=embedder.apply(text=pw.this.query, locator=embedder_locator),
-    )
+    embedded_query = Contextful(context=query, data_to_embed=pw.this.query)
 
     # Using the embeddings, retrieve the vector index by relevance to the query
-    query_context = index.query(query, k=3).select(
+    query_context = index.query(embedded_query, k=3).select(
         pw.this.query, local_indexed_data_list=pw.this.result
     )
 
     # Inserts the question and the most relevant sections into a message to OpenAI Chat Completion API
-    @pw.udf
-    def build_prompt(local_indexed_data, query):
-        docs_str = "\n".join(local_indexed_data)
-        prompt = f"Given the following discounts data: \n {docs_str} \nanswer this query: {query}, Assume that current date is: {datetime.now()}. and clean the output"
-        return prompt
-
-    prompt = query_context.select(
-        prompt=build_prompt(pw.this.local_indexed_data_list, pw.this.query)
-    )
-
-    model = OpenAIChatGPTModel(api_key=api_key)
-
-    responses = prompt.select(
-        query_id=pw.this.id,
-        result=model.apply(
-            pw.this.prompt,
-            locator=model_locator,
-            temperature=temperature,
-            max_tokens=max_tokens,
-        ),
-    )
+    responses = Prompt(query_context)
 
     # Returns ChatGPT's answer
     response_writer(responses)
