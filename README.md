@@ -1,4 +1,4 @@
-# Find real-time discounts using LLM App
+# Find discounts using LLM App
 
 This repo demonstrates Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) with an example project that processes discount data in real-time like [Amazon Products Sales Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset?select=Shoes.csv) as input and exposes an HTTP REST endpoint to answer user queries about current discounts from different markets in a specific location and it uses OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses.
 
@@ -81,9 +81,10 @@ Example only supports Unix-like systems (such as Linux, macOS, BSD). If you are 
 
 1. Make sure that [Python](https://www.python.org/downloads/) 3.10 or above installed on your machine.
 2. Download and Install [Pip](https://pip.pypa.io/en/stable/installation/) to manage project packages.
-3. Create an [OpenAI](https://openai.com/) account and generate a new API Key: To access the OpenAI API, you will need to create an API Key. You can do this by logging into the [OpenAI website](https://openai.com/product) and navigating to the API Key management page.
 
 Then, follow the easy steps to install and get started using the sample app.
+
+1. Create an [OpenAI](https://openai.com/) account and generate new API Key: To access the OpenAI API, you will need to create an API Key. You can do this by logging into the [OpenAI website](https://openai.com/product) and navigating to the API Key management page.
 
 ### Step 1: Clone the repository
 
@@ -99,24 +100,21 @@ Next,  navigate to the project folder:
 cd find-discounts-using-llm-app
 ```
 
-### Step 2: Set OpenAI API Key
+### Step 2: Set environment variables
 
-Open [app.py](https://github.com/Boburmirzo/find-discounts-using-llm-app/blob/main/app.py) file and replace `{OPENAI_API_KEY}` in `run` method param with your key.
+Create `.env` file in the root directory of the project and replace `{OPENAI_API_KEY}` configuration value with your key.
+Optionally, you change other values.
 
-```python
-def run(
-    *,
-    data_dir: str = "./data/",
-    api_key: str = "{OPENAI_API_KEY}",
-    host: str = "0.0.0.0",
-    port: int = 8080,
-    embedder_locator: str = "text-embedding-ada-002",
-    embedding_dimension: int = 1536,
-    model_locator: str = "gpt-3.5-turbo",
-    max_tokens: int = 200,
-    temperature: int = 0.0,
-    **kwargs,
-)
+```bash
+OPENAI_API_TOKEN={OPENAI_API_KEY}
+HOST=0.0.0.0
+PORT=8080
+EMBEDDER_LOCATOR=text-embedding-ada-002
+EMBEDDING_DIMENSION=1536
+MODEL_LOCATOR=gpt-3.5-turbo
+MAX_TOKENS=200
+TEMPERATURE=0.0
+DATA_DIR=./data/
 ```
 
 ### Step 3: Install the app dependencies
@@ -144,10 +142,10 @@ python discounts-data-generator.py
 
 ### Step 5: Run and start to use it
 
-You start the application by navigating to `llm_app` folder and run `app.py`:
+You start the application by navigating to `llm_app` folder and run `main.py`:
 
 ```bash
-python ./example/app.py
+python app.py
 ```
 
 When the application runs successfully, you should see output something like this:
@@ -171,7 +169,7 @@ curl --data '{"user": "user", "query": "Can you find me discounts this month for
 You will get the response as its expected.
 
 ```text
-"Based on the given data, there is one discount available this year for Nike's men shoes. Here are the details::
+"Based on the given data, there is one discount available this month for Nike's men shoes. Here are the details::
 
 Discounts this week for Nike's men shoes:
 
@@ -187,6 +185,4 @@ Actual Price: $130.67
 Discounted Price: $117.60
 Discount Percentage: 10%
 Ship Date: 2024-08-09
-
-Please note that this is a fictional example and the data provided is not real."
 ```
