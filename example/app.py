@@ -1,28 +1,22 @@
-import os
 import pathway as pw
 
-from dotenv import load_dotenv
 from datetime import datetime
 from pathway.stdlib.ml.index import KNNIndex
 from llm_app.model_wrappers import OpenAIChatGPTModel, OpenAIEmbeddingModel
 from schemas import DiscountsInputSchema, QueryInputSchema
 from transform import transform_data
 
-# Load environment variables from the .env file
-load_dotenv()
 
 def run(
-    *,
-    data_dir: str = os.environ.get("DATA_DIR", "./data/"),
-    api_key: str = os.environ.get("OPENAI_API_TOKEN", ""),
-    host: str = os.environ.get("HOST", "0.0.0.0"),
-    port: int = int(os.environ.get("PORT", 8080)),
-    embedder_locator: str = os.environ.get("EMBEDDER_LOCATOR", "text-embedding-ada-002"),
-    embedding_dimension: int = int(os.environ.get("EMBEDDING_DIMENSION", 1536)),
-    model_locator: str = os.environ.get("MODEL_LOCATOR", "gpt-3.5-turbo"),
-    max_tokens: int = int(os.environ.get("MAX_TOKENS", 200)),
-    temperature: float = float(os.environ.get("TEMPERATURE", 0.0)),
-    **kwargs,
+    data_dir,
+    api_key,
+    host,
+    port,
+    embedder_locator,
+    embedding_dimension,
+    model_locator,
+    max_tokens,
+    temperature
 ):
     embedder = OpenAIEmbeddingModel(api_key=api_key)
 
@@ -90,7 +84,3 @@ def run(
     response_writer(responses)
 
     pw.run()
-
-
-if __name__ == "__main__":
-    run()

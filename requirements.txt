@@ -2,3 +2,4 @@ pathway
 pandas
 datetime
 llm_app
+python-dotenv

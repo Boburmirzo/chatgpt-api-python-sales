@@ -1,5 +1,6 @@
 import pathway as pw
 
+
 # Maps each data row into a structured document schema using Pathway
 class DiscountsInputSchema(pw.Schema):
     discount_until: str
@@ -18,6 +19,7 @@ class DiscountsInputSchema(pw.Schema):
     discount_price: str
     discount_percentage: str
     address: str
+
 
 class QueryInputSchema(pw.Schema):
     query: str

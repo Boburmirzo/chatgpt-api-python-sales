@@ -1,5 +1,6 @@
 import pathway as pw
 
+
 def concat_with_titles(*args) -> str:
     titles = [
         "country",
@@ -22,6 +23,7 @@ def concat_with_titles(*args) -> str:
     ]
     combined = [f"{title}: {value}" for title, value in zip(titles, args)]
     return ', '.join(combined)
+
 
 def transform_data(sales_data):
     combined_data = sales_data.select(
