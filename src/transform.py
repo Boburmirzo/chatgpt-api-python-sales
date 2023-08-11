@@ -25,7 +25,7 @@ def concat_with_titles(*args) -> str:
     return ', '.join(combined)
 
 
-def Transform(sales_data):
+def transform(sales_data):
     return sales_data.select(
         doc=pw.apply(concat_with_titles,
                      pw.this.country,

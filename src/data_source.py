@@ -3,7 +3,7 @@ import os
 import json
 from enum import Enum
 from dotenv import load_dotenv
-from rainforestapi_helper import Get_URL
+from src.rainforestapi_helper import Get_URL
 
 load_dotenv()
 
@@ -15,7 +15,7 @@ class DataSourceType(Enum):
     RAINFOREST_API = "RAINFOREST_API"
 
 
-def Connect(source_type, schema, params=None):
+def connect(source_type, schema, params=None):
     if source_type == DataSourceType.CSV:
         return read_from_csv(data_dir, schema)
     elif source_type == DataSourceType.RAINFOREST_API:

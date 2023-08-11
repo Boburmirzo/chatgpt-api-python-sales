@@ -101,10 +101,11 @@ cd find-discounts-using-llm-app
 
 ### Step 2: Set environment variables
 
-Create `.env` file in the root directory of the project and replace `{OPENAI_API_KEY}` configuration value with your key.
-Optionally, you change other values.
+Create `.env` file in the root directory of the project, copy and paste below config and replace `{OPENAI_API_KEY}` configuration value with your key.
+Optionally, you change other values. `APP_VARIANT=csv` means the app uses csv file as a data source.
 
 ```bash
+APP_VARIANT=csv
 OPENAI_API_TOKEN={OPENAI_API_KEY}
 HOST=0.0.0.0
 PORT=8080
