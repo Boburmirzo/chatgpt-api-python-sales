@@ -5,6 +5,7 @@ from schemas import DiscountsInputSchema, QueryInputSchema
 from transform import Transform
 from embedder import Contextful
 from prompt import Prompt
+from data_source import Connect, DataSourceType
 
 
 def run(
@@ -14,12 +15,7 @@ def run(
     embedding_dimension
 ):
     # Real-time data coming from external data sources such as csv file
-    sales_data = pw.io.csv.read(
-        data_dir,
-        schema=DiscountsInputSchema,
-        mode="streaming",
-        autocommit_duration_ms=50,
-    )
+    sales_data = Connect(DataSourceType.CSV, DiscountsInputSchema, data_dir)
 
     # Data source rows transformed into structured documents
     documents = Transform(sales_data)
