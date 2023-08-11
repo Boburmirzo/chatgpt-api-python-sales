@@ -1,24 +1,23 @@
 import pathway as pw
-from schemas import DiscountsInputSchema, QueryInputSchema
-from transform import Transform
-from embedder import Contextful
-from prompt import Prompt
-from data_source import Connect, DataSourceType
-from index_embeddings import Index
+from src.schemas import CsvDiscountsInputSchema, QueryInputSchema
+from src.transform import transform
+from src.embedder import contextful, index_embeddings
+from src.prompt import prompt
+from src.data_source import connect, DataSourceType
 
 
 def run(host, port):
     # Real-time data coming from external data sources such as csv file
-    sales_data = Connect(DataSourceType.CSV, DiscountsInputSchema)
+    sales_data = connect(DataSourceType.CSV, CsvDiscountsInputSchema)
 
     # Data source rows transformed into structured documents
-    documents = Transform(sales_data)
+    documents = transform(sales_data)
 
     # Compute embeddings for each document using the OpenAI Embeddings API
-    embedded_data = Contextful(context=documents, data_to_embed=documents.doc)
+    embedded_data = contextful(context=documents, data_to_embed=documents.doc)
 
     # Construct an index on the generated embeddings in real-time
-    index = Index(embedded_data)
+    index = index_embeddings(embedded_data)
 
     # Given a user question as a query from your API
     query, response_writer = pw.io.http.rest_connector(
@@ -29,10 +28,10 @@ def run(host, port):
     )
 
     # Generate embeddings for the query from the OpenAI Embeddings API
-    embedded_query = Contextful(context=query, data_to_embed=pw.this.query)
+    embedded_query = contextful(context=query, data_to_embed=pw.this.query)
 
     # Build prompt using indexed data
-    responses = Prompt(index, embedded_query, pw.this.query)
+    responses = prompt(index, embedded_query, pw.this.query)
 
     # Feed the prompt to ChatGPT and obtain the generated answer.
     response_writer(responses)
