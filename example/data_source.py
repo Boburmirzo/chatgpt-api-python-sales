@@ -1,5 +1,11 @@
 import pathway as pw
+import os
 from enum import Enum
+from dotenv import load_dotenv
+
+load_dotenv()
+
+data_dir = os.environ.get("DATA_DIR", "./data/")
 
 
 class DataSourceType(Enum):
@@ -7,7 +13,7 @@ class DataSourceType(Enum):
     RAINFOREST_API = "RAINFOREST_API"
 
 
-def Connect(source_type, schema, data_dir='./data/'):
+def Connect(source_type, schema):
     if source_type == DataSourceType.CSV:
         return read_from_csv(data_dir, schema)
     elif source_type == DataSourceType.RAINFOREST_API:

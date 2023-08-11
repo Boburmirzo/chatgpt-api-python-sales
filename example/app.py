@@ -1,21 +1,15 @@
 import pathway as pw
-
-from pathway.stdlib.ml.index import KNNIndex
 from schemas import DiscountsInputSchema, QueryInputSchema
 from transform import Transform
 from embedder import Contextful
 from prompt import Prompt
 from data_source import Connect, DataSourceType
+from index_embeddings import Index
 
 
-def run(
-    data_dir,
-    host,
-    port,
-    embedding_dimension
-):
+def run(host, port):
     # Real-time data coming from external data sources such as csv file
-    sales_data = Connect(DataSourceType.CSV, DiscountsInputSchema, data_dir)
+    sales_data = Connect(DataSourceType.CSV, DiscountsInputSchema)
 
     # Data source rows transformed into structured documents
     documents = Transform(sales_data)
@@ -24,7 +18,7 @@ def run(
     embedded_data = Contextful(context=documents, data_to_embed=documents.doc)
 
     # Construct an index on the generated embeddings in real-time
-    index = KNNIndex(embedded_data, d=embedding_dimension)
+    index = Index(embedded_data)
 
     # Given a user question as a query from your API
     query, response_writer = pw.io.http.rest_connector(
