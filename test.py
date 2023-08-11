@@ -5,22 +5,22 @@ data = """{"request_info":{"success":true,"credits_used":13,"credits_remaining":
 parsed_data = json.loads(data)
 # Extract deals_results
 deals_results = parsed_data["deals_results"]
-# Map the desired fields for each deal
-mapped_results = [
-    {
-        "position": deal["position"],
-        "link": deal["link"],
-        "asin": deal["asin"],
-        "deal_type": deal["deal_type"],
-        "title": deal["title"],
-        "image": deal["image"],
-        "deal_price": deal["deal_price"]["raw"],
-        "list_price": deal["list_price"]["raw"],
-        "current_price": deal["current_price"]["raw"],
-        "merchant_name": deal["merchant_name"],
-        "description": deal["description"],
-        "rating": deal["rating"]
-     } for deal in deals_results
-]
-json_output = json.dumps(mapped_results, indent=4)
+json_output = ''
+for deal in deals_results:
+  # Map the desired fields for each deal
+  mapped_results = {
+    "position": deal["position"],
+    "link": deal["link"],
+    "asin": deal["asin"],
+    "deal_type": deal["deal_type"],
+    "title": deal["title"],
+    "image": deal["image"],
+    "deal_price": deal["deal_price"]["raw"],
+    "list_price": deal["list_price"]["raw"],
+    "current_price": deal["current_price"]["raw"],
+    "merchant_name": deal["merchant_name"],
+    "description": deal["description"],
+    "rating": deal["rating"]
+  }
+  json_output+=json.dumps(mapped_results)
 print(json_output)
