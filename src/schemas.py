@@ -21,21 +21,6 @@ class CsvDiscountsInputSchema(pw.Schema):
     address: str
 
 
-class RainforestDealsInputSchema(pw.Schema):
-    position: int
-    link: str
-    asin: str
-    deal_type: str
-    title: str
-    image: str
-    deal_price: float
-    list_price: float
-    current_price: float
-    merchant_name: str
-    description: str
-    rating: float
-
-
 class QueryInputSchema(pw.Schema):
     query: str
     user: str
