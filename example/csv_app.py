@@ -1,5 +1,5 @@
 import pathway as pw
-from schemas import DiscountsInputSchema, QueryInputSchema
+from schemas import CsvDiscountsInputSchema, QueryInputSchema
 from transform import Transform
 from embedder import Contextful
 from prompt import Prompt
@@ -9,7 +9,7 @@ from index_embeddings import Index
 
 def run(host, port):
     # Real-time data coming from external data sources such as csv file
-    sales_data = Connect(DataSourceType.CSV, DiscountsInputSchema)
+    sales_data = Connect(DataSourceType.CSV, CsvDiscountsInputSchema)
 
     # Data source rows transformed into structured documents
     documents = Transform(sales_data)
