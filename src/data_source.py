@@ -15,7 +15,7 @@ class DataSourceType(Enum):
     RAINFOREST_API = "RAINFOREST_API"
 
 
-def connect(source_type, schema, params=None):
+def connect(source_type, schema=None, params=None):
     if source_type == DataSourceType.CSV:
         return read_from_csv(data_dir, schema)
     elif source_type == DataSourceType.RAINFOREST_API:
@@ -28,24 +28,26 @@ def read_from_csv(data_dir, schema):
     sales_data = pw.io.csv.read(
         data_dir,
         schema=schema,
-        mode="streaming",
-        autocommit_duration_ms=50,
+        mode="streaming"
     )
     return sales_data
 
 
 def read_from_rainforest_api(schema, params):
-    def mapper(msg: bytes) -> bytes:
-        parsed_data = json.loads(msg.decode())
+    def mapper(data: bytes) -> bytes:
+        parsed_data = json.loads(data)
         deals_results = parsed_data["deals_results"]
-        # Extract deals_results
-        return json.dumps({"deals_results": deals_results}).encode()
+        output = ''
+        for deal in deals_results:
+            line = json.dumps(deal)
+            output += line + '\n'
+        return json.dumps({"deals_results": output}).encode()
 
     table = pw.io.http.read(
         Get_URL(params),
         method="GET",
         response_mapper=mapper,
-        autocommit_duration_ms=1000,
+        schema=schema
     )
 
     return table
