@@ -1,5 +1,5 @@
 import pathway as pw
-from src.schemas import RainforestDealsInputSchema,QueryInputSchema
+from src.schemas import RainforestDealsInputSchema, QueryInputSchema
 from src.data_source import connect, DataSourceType
 from src.embedder import contextful, index_embeddings
 from src.transform import transform
@@ -45,9 +45,3 @@ def run(host, port):
 
     # Run the pipeline
     pw.run()
-    # t2 = sales_data.from_columns(sales_data.deals_results)
-    # new_table = pw.Table([{'doc': deal} for deal in sales_data.deals_results])
-    # pw.debug.compute_and_print(sales_data)
-    # pw.io.jsonlines.write(sales_data, "table.jsonl")
-
-    # pw.run()
