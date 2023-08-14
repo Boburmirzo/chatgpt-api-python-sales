@@ -21,35 +21,12 @@ class CsvDiscountsInputSchema(pw.Schema):
     address: str
 
 
-# class RainforestDealsInputSchema(pw.Schema):
-#     position: int
-#     link: str
-#     asin: str
-#     deal_type: str
-#     title: str
-#     image: str
-#     deal_price: float
-#     list_price: float
-#     current_price: float
-#     merchant_name: str
-#     description: str
-#     rating: float
-
-
 class QueryInputSchema(pw.Schema):
     query: str
     user: str
 
 
-class Price(pw.Schema):
-    value: float
-    currency: str
-    symbol: str
-    raw: str
-    name: str
-
-
-class DealResult(pw.Schema):
+class RainforestDealsInputSchema(pw.Schema):
     position: int
     link: str
     asin: str
@@ -61,9 +38,9 @@ class DealResult(pw.Schema):
     type: str
     title: str
     image: str
-    deal_price: Price
-    list_price: Price
-    current_price: Price
+    deal_price: float
+    old_price: float
+    currency: str
     merchant_name: str
     free_shipping: bool
     is_prime: bool
@@ -73,7 +50,3 @@ class DealResult(pw.Schema):
     description: str
     rating: float
     ratings_total: int
-
-
-class RainforestDealsInputSchema(pw.Schema):
-    deals_results: list[DealResult]
