@@ -8,7 +8,8 @@ from urllib.parse import urlencode
 load_dotenv()
 
 api_key = os.environ.get("RAINFOREST_API_KEY", "")
-base_url = os.environ.get("RAINFOREST_BASE_URL", "https://run.mocky.io/v3/f17d8811-09ff-4ba6-8d14-31ef972ce6cd/request")
+# Mock Rainforest API response if base_url is not specified
+base_url = os.environ.get("RAINFOREST_BASE_URL", "https://run.mocky.io/v3/db4dbb0a-b3da-4645-8bd0-5ef83b6afcf3/request")
 
 base_params = {
     "api_key": api_key,

@@ -8,7 +8,7 @@ from src.prompt import prompt
 
 def run(host, port):
     params = {
-      "category_id": "679442011"
+      "category_id": "679255011"  # Standard category shoes
       # ... any other params
     }
 
