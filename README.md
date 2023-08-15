@@ -1,6 +1,6 @@
 # Find discounts using LLM App
 
-This repo demonstrates Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) with an example project that processes discount data in real-time like [Amazon Products Sales Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset?select=Shoes.csv) as input and exposes an HTTP REST endpoint to answer user queries about current discounts from different markets in a specific location and it uses OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses.
+This repo demonstrates Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) with an example project that processes discount data in real-time like [Amazon Products Sales Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset?select=Shoes.csv) or [Rainforest Product API](https://www.rainforestapi.com/docs/product-data-api/overview) as input and exposes an HTTP REST endpoint to answer user queries about current discounts from different markets like Amazon deals in a specific location and it uses OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses.
 
 ## Use case
 
@@ -82,6 +82,7 @@ Example only supports Unix-like systems (such as Linux, macOS, BSD). If you are 
 1. Make sure that [Python](https://www.python.org/downloads/) 3.10 or above installed on your machine.
 2. Download and Install [Pip](https://pip.pypa.io/en/stable/installation/) to manage project packages.
 3. Create an [OpenAI](https://openai.com/) account and generate a new API Key: To access the OpenAI API, you will need to create an API Key. You can do this by logging into the [OpenAI website](https://openai.com/product) and navigating to the API Key management page.
+4. (Optional): if you use Rainforest API as a data source, create an [Rainforest](https://www.rainforestapi.com/) account and get a new API Key. Refer to Rainforest API [documentation](https://www.rainforestapi.com/docs).
 
 Then, follow the easy steps to install and get started using the sample app.
 
@@ -103,10 +104,13 @@ cd find-discounts-using-llm-app
 
 Create `.env` file in the root directory of the project, copy and paste below config and replace `{OPENAI_API_KEY}` configuration value with your key.
 Optionally, you change other values. `APP_VARIANT=csv` means the app uses csv file as a data source.
+If you change it to `APP_VARIANT=rainforest` it uses Rainforest API as a data source. In this case, you need to specify also `{RAINFOREST_BASE_URL}` and `{RAINFOREST_API_KEY}`. By default the app uses [Mock API response](https://run.mocky.io/v3/f17d8811-09ff-4ba6-8d14-31ef972ce6cd/request).
 
 ```bash
 APP_VARIANT=csv
 OPENAI_API_TOKEN={OPENAI_API_KEY}
+RAINFOREST_BASE_URL={RAINFOREST_BASE_URL}
+RAINFOREST_API_KEY={RAINFOREST_API_KEY}
 HOST=0.0.0.0
 PORT=8080
 EMBEDDER_LOCATOR=text-embedding-ada-002

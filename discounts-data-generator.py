@@ -41,6 +41,6 @@ for i in range(10):
 df = pd.DataFrame(data, columns=["discount_until", "country", "city", "state", "postal_code", "region", "product_id", "category", "sub_category", "brand", "product_name", "currency", "actual_price", "discount_price", "discount_percentage", "address"])
 
 # Save to CSV
-df.to_csv('./data/future_discounts.csv', index=False)
+df.to_csv('./data/csv/discounts.csv', index=False)
 
 print('Dataset generated and saved to future_discounts.csv')

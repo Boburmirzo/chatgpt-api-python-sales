@@ -1,0 +1,11 @@
+discount_until,country,city,state,postal_code,region,product_id,category,sub_category,brand,product_name,currency,actual_price,discount_price,discount_percentage,address
+2024-05-11,USA,San Francisco,NY,73670,South,5068,Footwear,Women Shoes,Puma,Running Shoes,EUR,110.08,104.58,5,100 Pine St
+2024-07-09,USA,New York,CA,35841,West,7731,Footwear,Women Shoes,Nike,Formal Shoes,EUR,175.59,126.42,28,123 Main St
+2024-03-01,USA,Los Angeles,NY,48191,South,1379,Footwear,Men Shoes,Addidas,Formal Shoes,GBP,162.92,115.67,29,789 Elm St
+2024-07-05,USA,Los Angeles,IL,70805,East,8267,Footwear,Men Shoes,Addidas,Formal Shoes,EUR,139.99,107.79,23,123 Main St
+2024-06-28,USA,Los Angeles,IL,87650,South,2546,Footwear,Men Shoes,Puma,Running Shoes,EUR,100.76,71.54,29,456 Market St
+2024-07-07,USA,San Francisco,NY,10046,South,4059,Footwear,Men Shoes,Addidas,Formal Shoes,GBP,112.34,101.11,10,456 Market St
+2024-06-26,USA,San Francisco,IL,60258,South,1441,Footwear,Men Shoes,Reebok,Formal Shoes,USD,145.68,112.17,23,456 Market St
+2024-06-01,USA,New York,IL,41996,West,6116,Footwear,Women Shoes,Puma,Formal Shoes,USD,94.61,69.07,27,100 Pine St
+2023-11-25,USA,New York,IL,24376,Central,6220,Footwear,Women Shoes,Reebok,Running Shoes,USD,132.19,96.5,27,123 Main St
+2024-08-11,USA,New York,NY,56010,East,7480,Footwear,Men Shoes,Addidas,Running Shoes,USD,187.58,135.06,28,789 Elm St

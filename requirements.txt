@@ -1,5 +1,6 @@
 pathway
 pandas
+requests
 datetime
 llm_app
 python-dotenv
