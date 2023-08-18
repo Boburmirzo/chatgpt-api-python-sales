@@ -1,6 +1,12 @@
-# Find discounts using LLM App
+# ChatGPT API in Python for sales
 
-This repo demonstrates Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) with an example project that processes discount data in real-time like [Amazon Products Sales Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset?select=Shoes.csv) or [Rainforest Product API](https://www.rainforestapi.com/docs/product-data-api/overview) as input and exposes an HTTP REST endpoint to answer user queries about current discounts from different markets like Amazon deals in a specific location and it uses OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses.
+Using this repo you can find real-time discounts/deals/sales from various online markets around the world. The project
+exposes an HTTP REST endpoint to answer user queries about current sales like [Amazon deals](https://www.amazon.com/gp/goldbox?ref_=nav_cs_gb) in a specific location. It uses Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) to build real-time LLM(Large Language Model)-enabled data pipeline in Python and join data from multiple input sources, leverages OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses. 
+
+Currently, the project supports two types of data sources and it is **possible to extend sources** by adding custom input connectors:
+
+- Any CSV like [Amazon Products Sales Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset?select=Shoes.csv).
+- [Rainforest Product API](https://www.rainforestapi.com/docs/product-data-api/overview).
 
 ## Use case
 
