@@ -8,6 +8,14 @@ Currently, the project supports two types of data sources and it is **possible t
 - Any CSV like [Amazon Products Sales Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset?select=Shoes.csv).
 - [Rainforest Product API](https://www.rainforestapi.com/docs/product-data-api/overview).
 
+## Features:
+
+- Retrieves the latest deals from various sources.
+- Provides a user-friendly API interface to explore these deals.
+- Filters and presents deals based on user queries or chosen data sources.
+- Data and code reusability for offline evaluation. User has the option to choose to use local (cached) or real data.
+- Extend data sources: Using Pathway's built-in connectors for JSONLines, Kafka, Redpanda, Debezium, streaming APIs, and more.
+
 ## Use case
 
 [Open AI GPT](https://openai.com/gpt-4) excels at answering questions, but only on topics it remembers from its training data. If you want GPT to answer questions about unfamiliar topics such as:
