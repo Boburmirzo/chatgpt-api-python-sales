@@ -1,6 +1,6 @@
 # ChatGPT Python API for sales
 
-Using this repo you can find real-time discounts/deals/sales from various online markets around the world. The project
+Using this repo you can find real-time discounts/deals/sales prices from various online markets around the world. The project
 exposes an HTTP REST endpoint to answer user queries about current sales like [Amazon deals](https://www.amazon.com/gp/goldbox?ref_=nav_cs_gb) in a specific location. It uses Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) to build real-time LLM(Large Language Model)-enabled data pipeline in Python and join data from multiple input sources, leverages OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses. 
 
 Currently, the project supports two types of data sources and it is **possible to extend sources** by adding custom input connectors:
