@@ -8,7 +8,7 @@ load_dotenv()
 embedding_dimension = int(os.environ.get("EMBEDDING_DIMENSION", 1536))
 
 
-def contextful(context, data_to_embed):
+def embeddings(context, data_to_embed):
     return context + context.select(data=openai_embedder(data_to_embed))
 
 
