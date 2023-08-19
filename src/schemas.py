@@ -23,7 +23,6 @@ class CsvDiscountsInputSchema(pw.Schema):
 
 class QueryInputSchema(pw.Schema):
     query: str
-    user: str
 
 
 class RainforestDealsInputSchema(pw.Schema):
