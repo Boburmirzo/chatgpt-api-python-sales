@@ -1,7 +1,7 @@
 import pathway as pw
 from src.schemas import CsvDiscountsInputSchema, QueryInputSchema
 from src.transform import transform
-from src.embedder import contextful, index_embeddings
+from src.embedder import embeddings, index_embeddings
 from src.prompt import prompt
 from src.data_source import connect, DataSourceType
 
@@ -14,7 +14,7 @@ def run(host, port):
     documents = transform(sales_data)
 
     # Compute embeddings for each document using the OpenAI Embeddings API
-    embedded_data = contextful(context=documents, data_to_embed=documents.doc)
+    embedded_data = embeddings(context=documents, data_to_embed=documents.doc)
 
     # Construct an index on the generated embeddings in real-time
     index = index_embeddings(embedded_data)
@@ -28,7 +28,7 @@ def run(host, port):
     )
 
     # Generate embeddings for the query from the OpenAI Embeddings API
-    embedded_query = contextful(context=query, data_to_embed=pw.this.query)
+    embedded_query = embeddings(context=query, data_to_embed=pw.this.query)
 
     # Build prompt using indexed data
     responses = prompt(index, embedded_query, pw.this.query)

@@ -1,6 +1,6 @@
 import pathway as pw
 from datetime import datetime
-from src.embedder import chatGPTModel
+from src.openaiapi_helper import openai_chat_completion
 
 
 def prompt(index, embedded_query, user_query):
@@ -21,5 +21,5 @@ def prompt(index, embedded_query, user_query):
 
     return prompt.select(
         query_id=pw.this.id,
-        result=chatGPTModel(pw.this.prompt),
+        result=openai_chat_completion(pw.this.prompt),
     )
