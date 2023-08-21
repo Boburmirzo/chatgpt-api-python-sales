@@ -1,5 +1,5 @@
 import pathway as pw
-from src.schemas import CsvDiscountsInputSchema, QueryInputSchema
+from src.schemas import QueryInputSchema
 from src.transform import transform
 from src.embedder import embeddings, index_embeddings
 from src.prompt import prompt
@@ -8,13 +8,10 @@ from src.data_source import connect, DataSourceType
 
 def run(host, port):
     # Real-time data coming from external data sources such as csv file
-    sales_data = connect(DataSourceType.CSV, CsvDiscountsInputSchema)
-
-    # Data source rows transformed into structured documents
-    documents = transform(sales_data)
+    sales_data = connect(DataSourceType.CSV)
 
     # Compute embeddings for each document using the OpenAI Embeddings API
-    embedded_data = embeddings(context=documents, data_to_embed=documents.doc)
+    embedded_data = embeddings(context=sales_data, data_to_embed=sales_data.doc)
 
     # Construct an index on the generated embeddings in real-time
     index = index_embeddings(embedded_data)

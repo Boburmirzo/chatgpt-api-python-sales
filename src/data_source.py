@@ -3,6 +3,7 @@ import os
 from enum import Enum
 from dotenv import load_dotenv
 from src.rainforestapi_helper import send_request
+from src.csv_custom_connector import CsvFileCustomConnector
 
 load_dotenv()
 
@@ -14,7 +15,7 @@ class DataSourceType(Enum):
     RAINFOREST_API = "RAINFOREST_API"
 
 
-def connect(source_type, schema, params=None):
+def connect(source_type, schema=None, params=None):
     if source_type == DataSourceType.CSV:
         return read_from_csv(data_dir, schema)
     elif source_type == DataSourceType.RAINFOREST_API:
@@ -24,10 +25,10 @@ def connect(source_type, schema, params=None):
 
 
 def read_from_csv(data_dir, schema):
-    sales_data = pw.io.csv.read(
-        data_dir + "/csv",
-        schema=schema,
-        mode="streaming"
+    sales_data = pw.io.python.read(
+        CsvFileCustomConnector(data_dir + "/csv"),
+        value_columns=["doc"],
+        format="json"
     )
     return sales_data
 
