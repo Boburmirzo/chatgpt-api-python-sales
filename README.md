@@ -8,13 +8,26 @@ Currently, the project supports two types of data sources and it is **possible t
 - Any CSV like [Amazon Products Sales Dataset](https://www.kaggle.com/datasets/lokeshparab/amazon-products-dataset?select=Shoes.csv).
 - [Rainforest Product API](https://www.rainforestapi.com/docs/product-data-api/overview).
 
-## Features:
+## Features
 
 - Retrieves the latest deals from various sources.
 - Provides a user-friendly API interface to explore these deals.
 - Filters and presents deals based on user queries or chosen data sources.
 - Data and code reusability for offline evaluation. User has the option to choose to use local (cached) or real data.
 - Extend data sources: Using Pathway's built-in connectors for JSONLines, Kafka, Redpanda, Debezium, streaming APIs, and more.
+
+## Demo
+
+In case you use Rainforest API as a data source for the project, it provides real-time deals for Amazon products.
+When the user has the following query in the API request:
+
+```text
+Can you find me discounts this week for Adidas men's shoes?
+```
+
+You will get the response with some discounts available in Amazon market:
+
+![LLM App responds with discounts from Amazon](/assets/LLM%20App%20v1.gif)
 
 ## Use case
 
@@ -168,7 +181,7 @@ python main.py
 
 When the application runs successfully, you should see output something like this:
 
-![Untitled](pathway_progress_dashboard.png)
+![pathway_progress_dashboard](/assets/pathway_progress_dashboard.png)
 
 ## Test the sample app
 
