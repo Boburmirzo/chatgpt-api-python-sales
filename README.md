@@ -181,10 +181,10 @@ Assume that we have this entry on the CSV file:
 When the user has the following query with `curl` command:
 
 ```bash
-curl --data '{"user": "user", "query": "Can you find me discounts this month for Nikes men shoes?"}' http://localhost:8080/
+curl --data '{"query": "Can you find me discounts this month for Nikes men shoes?"}' http://localhost:8080/
 ```
 
-You will get the response as its expected.
+You will get the response as it's expected if discounts are in the CSV document.
 
 ```text
 "Based on the given data, there is one discount available this month for Nike's men shoes. Here are the details::
