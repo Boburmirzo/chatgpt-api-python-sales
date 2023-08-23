@@ -29,6 +29,10 @@ You will get the response with some discounts available in Amazon market:
 
 ![LLM App responds with discounts from Amazon](/assets/LLM%20App%20v1.gif)
 
+As evident, ChatGPT interface offers general advice on locating discounts but lacks specificity regarding where or what type of discounts, among other details:
+
+![ChatGPT needs custom data](/assets/ChatGPT%20Discounts%20V1.gif)
+
 ## Use case
 
 [Open AI GPT](https://openai.com/gpt-4) excels at answering questions, but only on topics it remembers from its training data. If you want GPT to answer questions about unfamiliar topics such as:
