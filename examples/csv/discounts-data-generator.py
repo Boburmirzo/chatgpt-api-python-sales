@@ -16,7 +16,7 @@ addresses = ['123 Main St', '456 Market St', '789 Elm St', '321 Oak St', '100 Pi
 
 # Generate dataset
 data = []
-for i in range(100):
+for i in range(10):
     discount_until = (datetime.now() + timedelta(days=random.randint(0, 364))).strftime('%Y-%m-%d')
     country = random.choice(countries)
     city = random.choice(cities)
@@ -41,6 +41,6 @@ for i in range(100):
 df = pd.DataFrame(data, columns=["discount_until", "country", "city", "state", "postal_code", "region", "product_id", "category", "sub_category", "brand", "product_name", "currency", "actual_price", "discount_price", "discount_percentage", "address"])
 
 # Save to CSV
-df.to_csv('./data/csv/discounts.csv', index=False)
+df.to_csv('./examples/csv/data/discounts.csv', index=False)
 
 print('Dataset generated and saved to future_discounts.csv')

@@ -1,6 +1,6 @@
 import pathway as pw
 from datetime import datetime
-from src.openaiapi_helper import openai_chat_completion
+from common.openaiapi_helper import openai_chat_completion
 
 
 def prompt(index, embedded_query, user_query):

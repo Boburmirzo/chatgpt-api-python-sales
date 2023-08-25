@@ -33,7 +33,7 @@ def send_request(data_dir, params):
 
         deals_results = data.get('deals_results', [])
 
-        with open(data_dir + "/rainforest/rainforest_discounts.jsonl", 'w') as file:
+        with open(data_dir + "/rainforest_discounts.jsonl", 'w') as file:
             for deal in deals_results:
                 deal['deal_price'] = deal.get('deal_price', {}).get('value', '')
                 deal['old_price'] = deal.get('list_price', {}).get('value', '')

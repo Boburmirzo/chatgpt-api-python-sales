@@ -1,9 +1,38 @@
 import pathway as pw
-from src.schemas import RainforestDealsInputSchema, QueryInputSchema
-from src.data_source import connect, DataSourceType
-from src.embedder import embeddings, index_embeddings
-from src.transform import transform
-from src.prompt import prompt
+from common.embedder import embeddings, index_embeddings
+from common.transform import transform
+from common.prompt import prompt
+from examples.rainforest.rainforestapi_helper import send_request
+
+
+class RainforestDealsInputSchema(pw.Schema):
+    position: int
+    link: str
+    asin: str
+    is_lightning_deal: bool
+    deal_type: str
+    is_prime_exclusive: bool
+    starts_at: str
+    ends_at: str
+    type: str
+    title: str
+    image: str
+    deal_price: float
+    old_price: float
+    currency: str
+    merchant_name: str
+    free_shipping: bool
+    is_prime: bool
+    is_map: bool
+    deal_id: str
+    seller_id: str
+    description: str
+    rating: float
+    ratings_total: int
+
+
+class QueryInputSchema(pw.Schema):
+    query: str
 
 
 def run(host, port):
@@ -12,10 +41,16 @@ def run(host, port):
       # ... any other params
     }
 
-    # Real-time data coming from external data sources such as Rainforest Deals API
-    sales_data = connect(DataSourceType.RAINFOREST_API,
-                         RainforestDealsInputSchema,
-                         params)
+    data_dir = "./examples/rainforest/data"
+
+    send_request(data_dir, params)
+
+    sales_data = pw.io.jsonlines.read(
+        data_dir,
+        schema=RainforestDealsInputSchema,
+        mode="streaming",
+        autocommit_duration_ms=50,
+    )
 
     # Data source rows transformed into structured documents
     documents = transform(sales_data)

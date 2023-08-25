@@ -1,14 +1,39 @@
 import pathway as pw
-from src.schemas import CsvDiscountsInputSchema, QueryInputSchema
-from src.transform import transform
-from src.embedder import embeddings, index_embeddings
-from src.prompt import prompt
-from src.data_source import connect, DataSourceType
+from common.transform import transform
+from common.embedder import embeddings, index_embeddings
+from common.prompt import prompt
+
+
+class CsvDiscountsInputSchema(pw.Schema):
+    discount_until: str
+    country: str
+    city: str
+    state: str
+    postal_code: str
+    region: str
+    product_id: str
+    category: str
+    sub_category: str
+    brand: str
+    product_name: str
+    currency: str
+    actual_price: str
+    discount_price: str
+    discount_percentage: str
+    address: str
+
+
+class QueryInputSchema(pw.Schema):
+    query: str
 
 
 def run(host, port):
     # Real-time data coming from external data sources such as csv file
-    sales_data = connect(DataSourceType.CSV, CsvDiscountsInputSchema)
+    sales_data = pw.io.csv.read(
+        "./examples/csv/data",
+        schema=CsvDiscountsInputSchema,
+        mode="streaming"
+    )
 
     # Data source rows transformed into structured documents
     documents = transform(sales_data)

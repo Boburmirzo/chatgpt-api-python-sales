@@ -3,4 +3,5 @@ pandas
 requests
 datetime
 llm_app
+streamlit
 python-dotenv

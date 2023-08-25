@@ -1,0 +1,11 @@
+discount_until,country,city,state,postal_code,region,product_id,category,sub_category,brand,product_name,currency,actual_price,discount_price,discount_percentage,address
+2024-07-21,USA,New York,IL,96704,Central,8991,Footwear,Men Shoes,Nike,Casual Shoes,USD,60.0,43.0,28,123 Main St
+2023-10-16,USA,New York,NY,68121,East,5672,Footwear,Women Shoes,Puma,Running Shoes,USD,83.0,78.0,6,789 Elm St
+2024-05-08,USA,San Francisco,NY,74888,Central,5736,Footwear,Men Shoes,Puma,Formal Shoes,USD,101.0,83.0,18,789 Elm St
+2023-11-21,USA,San Francisco,NY,42306,West,9316,Footwear,Men Shoes,Adidas,Casual Shoes,USD,166.0,143.0,14,100 Pine St
+2024-04-19,USA,Los Angeles,NY,42404,South,8361,Footwear,Men Shoes,Adidas,Formal Shoes,USD,120.0,101.0,16,123 Main St
+2023-08-27,USA,New York,NY,47966,East,2260,Footwear,Women Shoes,Adidas,Casual Shoes,USD,143.0,123.0,14,456 Market St
+2024-07-21,USA,New York,CA,30101,South,3182,Footwear,Men Shoes,Puma,Formal Shoes,USD,54.0,41.0,24,321 Oak St
+2024-07-20,USA,Los Angeles,IL,15667,South,3516,Footwear,Women Shoes,Adidas,Formal Shoes,USD,195.0,154.0,21,321 Oak St
+2023-08-26,USA,San Francisco,NY,11171,East,1242,Footwear,Women Shoes,Nike,Formal Shoes,USD,71.0,66.0,7,123 Main St
+2024-06-12,USA,San Francisco,CA,94122,West,5726,Footwear,Women Shoes,Adidas,Formal Shoes,USD,137.0,101.0,26,100 Pine St

@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from pathway.stdlib.ml.index import KNNIndex
-from src.openaiapi_helper import openai_embedder
+from common.openaiapi_helper import openai_embedder
 
 load_dotenv()
 
