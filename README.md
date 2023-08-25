@@ -102,13 +102,13 @@ Then, follow the easy steps to install and get started using the sample app.
 This is done with the `git clone` command followed by the URL of the repository:
 
 ```bash
-git clone https://github.com/Boburmirzo/find-discounts-using-llm-app.git
+git clone https://github.com/Boburmirzo/chatgpt-api-python-sales.git
 ```
 
 Next,  navigate to the project folder:
 
 ```bash
-cd find-discounts-using-llm-app
+cd chatgpt-api-python-sales
 ```
 
 ### Step 2: Set environment variables
