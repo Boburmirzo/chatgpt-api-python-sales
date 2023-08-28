@@ -4,42 +4,16 @@ from common.embedder import embeddings, index_embeddings
 from common.prompt import prompt
 
 
-class CsvDiscountsInputSchema(pw.Schema):
-    discount_until: str
-    country: str
-    city: str
-    state: str
-    postal_code: str
-    region: str
-    product_id: str
-    category: str
-    sub_category: str
-    brand: str
-    product_name: str
-    currency: str
-    actual_price: str
-    discount_price: str
-    discount_percentage: str
-    address: str
-
-
-class QueryInputSchema(pw.Schema):
-    query: str
-
-
 def run(host, port):
     # Real-time data coming from external data sources such as csv file
-    sales_data = pw.io.csv.read(
+    sales_data = pw.io.jsonlines.read(
         "./examples/csv/data",
-        schema=CsvDiscountsInputSchema,
+        schema=DiscountsInputSchema,
         mode="streaming"
     )
 
-    # Data source rows transformed into structured documents
-    documents = transform(sales_data)
-
     # Compute embeddings for each document using the OpenAI Embeddings API
-    embedded_data = embeddings(context=documents, data_to_embed=documents.doc)
+    embedded_data = embeddings(context=sales_data, data_to_embed=sales_data.doc)
 
     # Construct an index on the generated embeddings in real-time
     index = index_embeddings(embedded_data)
@@ -63,3 +37,11 @@ def run(host, port):
 
     # Run the pipeline
     pw.run()
+
+
+class DiscountsInputSchema(pw.Schema):
+    doc: str
+
+
+class QueryInputSchema(pw.Schema):
+    query: str

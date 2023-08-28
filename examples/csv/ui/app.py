@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from dotenv import load_dotenv
 import requests
+import json
 
 load_dotenv()
 api_host = os.environ.get("HOST", "0.0.0.0")
@@ -16,8 +17,18 @@ question = st.text_input("Search for something",
     disabled=not uploaded_file)
 
 if uploaded_file:
-    dataframe = pd.read_csv(uploaded_file)
-    dataframe.to_csv("../data/discounts.csv", index=False)
+    df = pd.read_csv(uploaded_file)
+    # Convert DataFrame to the desired format
+    formatted_rows = []
+    for _, row in df.iterrows():
+        row_data = [f"{title}: {value}" for title, value in row.items()]
+        row_data = ', '.join(row_data)
+        formatted_rows.append({"doc": row_data})
+
+    # Write to a jsonlines file
+    with open('../data/discounts.jsonl', 'w') as outfile:
+        for obj in formatted_rows:
+            outfile.write(json.dumps(obj) + '\n')
 
 
 if uploaded_file and question:

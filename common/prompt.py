@@ -8,7 +8,7 @@ def prompt(index, embedded_query, user_query):
     @pw.udf
     def build_prompt(local_indexed_data, query):
         docs_str = "\n".join(local_indexed_data)
-        prompt = f"Given the following discounts data: \n {docs_str} \nanswer this query: {query}, Assume that current date is: {datetime.now()}. and clean the output"
+        prompt = f"Given the following data: \n {docs_str} \nanswer this query: {query}, Assume that current date is: {datetime.now()}. and clean the output"
         return prompt
 
     query_context = index.query(embedded_query, k=3).select(
