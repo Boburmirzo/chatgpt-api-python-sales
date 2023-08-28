@@ -43,7 +43,7 @@ It requires only few lines of code to build a real-time AI-enabled data pipeline
 ```python
 # Real-time data coming from external data sources such as jsonlines file
 sales_data = pw.io.jsonlines.read(
-    "./examples/csv/data",
+    "./examples/data",
     schema=DataInputSchema,
     mode="streaming"
 )
