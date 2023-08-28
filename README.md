@@ -1,13 +1,11 @@
 # ChatGPT Python API for sales
 
-This repo demonstrates how to add a custom knowledge to ChatGPT with Pathway’s [LLM App](https://github.com/pathwaycom/llm-app).
-
-For example, you can build an AI app to find real-time discounts/deals/sales prices from various online markets around the world. Then it
+This is an AI app to find **real-time** discounts/deals/sales prices from various online markets around the world. The project
 exposes an HTTP REST endpoint to answer user queries about current sales like [Amazon deals](https://www.amazon.com/gp/goldbox?ref_=nav_cs_gb) in a specific location or from the given any input file such as (CSV, Jsonlines, PDF, Markdown, Txt). It uses Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) to build real-time LLM(Large Language Model)-enabled data pipeline in Python and join data from multiple input sources, leverages OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses.
 
 Currently, the project supports two types of data sources and it is **possible to extend sources** by adding custom input connectors:
 
-- Jsonlines - Data source expects having a `doc` object for each line. Make sure that you converted your input data first to Jsonlines. See a sample data in [discounts.jsonl](/examples/csv/data/discounts.jsonl)
+- Jsonlines - The Data source expects to have a `doc` object for each line. Make sure that you convert your input data first to Jsonlines. See a sample data in [discounts.jsonl](/examples/csv/data/discounts.jsonl)
 - [Rainforest Product API](https://www.rainforestapi.com/docs/product-data-api/overview).
 
 ## Features
