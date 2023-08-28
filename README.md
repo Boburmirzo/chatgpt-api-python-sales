@@ -1,11 +1,13 @@
 # ChatGPT Python API for sales
 
-Using this repo you can find real-time discounts/deals/sales prices from various online markets around the world. The project
-exposes an HTTP REST endpoint to answer user queries about current sales like [Amazon deals](https://www.amazon.com/gp/goldbox?ref_=nav_cs_gb) in a specific location. It uses Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) to build real-time LLM(Large Language Model)-enabled data pipeline in Python and join data from multiple input sources, leverages OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses.
+This repo demonstrates how to add a custom knowledge to ChatGPT with Pathway’s [LLM App](https://github.com/pathwaycom/llm-app).
+
+For example, you can build an AI app to find real-time discounts/deals/sales prices from various online markets around the world. Then it
+exposes an HTTP REST endpoint to answer user queries about current sales like [Amazon deals](https://www.amazon.com/gp/goldbox?ref_=nav_cs_gb) in a specific location or from the given any input file such as (CSV, Jsonlines, PDF, Markdown, Txt). It uses Pathway’s [LLM App features](https://github.com/pathwaycom/llm-app) to build real-time LLM(Large Language Model)-enabled data pipeline in Python and join data from multiple input sources, leverages OpenAI API [Embeddings](https://platform.openai.com/docs/api-reference/embeddings) and [Chat Completion](https://platform.openai.com/docs/api-reference/completions) endpoints to generate AI assistant responses.
 
 Currently, the project supports two types of data sources and it is **possible to extend sources** by adding custom input connectors:
 
-- Any CSV like [Amazon Products Sales Dataset](/examples/csv/data/discounts.csv).
+- Jsonlines - Data source expects having a `doc` object for each line. Make sure that you converted your input data first to Jsonlines. See a sample data in [discounts.jsonl](/examples/csv/data/discounts.jsonl)
 - [Rainforest Product API](https://www.rainforestapi.com/docs/product-data-api/overview).
 
 ## Features
@@ -15,7 +17,7 @@ Currently, the project supports two types of data sources and it is **possible t
 - Offers user-friendly UI with [Streamlit](https://streamlit.io/).
 - Filters and presents deals based on user queries or chosen data sources.
 - Data and code reusability for offline evaluation. User has the option to choose to use local (cached) or real data.
-- Extend data sources: Using Pathway's built-in connectors for JSONLines, Kafka, Redpanda, Debezium, streaming APIs, and more.
+- Extend data sources: Using Pathway's built-in connectors for JSONLines, CSV, Kafka, Redpanda, Debezium, streaming APIs, and more.
 
 ## Demo
 
@@ -39,42 +41,31 @@ As evident, ChatGPT interface offers general advice on locating discounts but la
 It requires only few lines of code to build a real-time AI-enabled data pipeline:
 
 ```python
-def run(host, port):
-    # Real-time data coming from external data sources such as csv file
-    sales_data = pw.io.csv.read(
-        "./examples/csv/data",
-        schema=CsvDiscountsInputSchema,
-        mode="streaming"
-    )
-
-    # Data source rows transformed into structured documents
-    documents = transform(sales_data)
-
-    # Compute embeddings for each document using the OpenAI Embeddings API
-    embedded_data = embeddings(context=documents, data_to_embed=documents.doc)
-
-    # Construct an index on the generated embeddings in real-time
-    index = index_embeddings(embedded_data)
-
-    # Given a user question as a query from your API
-    query, response_writer = pw.io.http.rest_connector(
-        host=host,
-        port=port,
-        schema=QueryInputSchema,
-        autocommit_duration_ms=50,
-    )
-
-    # Generate embeddings for the query from the OpenAI Embeddings API
-    embedded_query = embeddings(context=query, data_to_embed=pw.this.query)
-
-    # Build prompt using indexed data
-    responses = prompt(index, embedded_query, pw.this.query)
-
-    # Feed the prompt to ChatGPT and obtain the generated answer.
-    response_writer(responses)
-
-    # Run the pipeline
-    pw.run()
+# Real-time data coming from external data sources such as jsonlines file
+sales_data = pw.io.jsonlines.read(
+    "./examples/data",
+    schema=DataInputSchema,
+    mode="streaming"
+)
+# Compute embeddings for each document using the OpenAI Embeddings API
+embedded_data = embeddings(context=sales_data, data_to_embed=sales_data.doc)
+# Construct an index on the generated embeddings in real-time
+index = index_embeddings(embedded_data)
+# Given a user question as a query from your API
+query, response_writer = pw.io.http.rest_connector(
+    host=host,
+    port=port,
+    schema=QueryInputSchema,
+    autocommit_duration_ms=50,
+)
+# Generate embeddings for the query from the OpenAI Embeddings API
+embedded_query = embeddings(context=query, data_to_embed=pw.this.query)
+# Build prompt using indexed data
+responses = prompt(index, embedded_query, pw.this.query)
+# Feed the prompt to ChatGPT and obtain the generated answer.
+response_writer(responses)
+# Run the pipeline
+pw.run()
 ```
 
 ## Use case
@@ -116,7 +107,7 @@ The sample project does the following procedures to achieve the above output:
 
 1. Prepare search data:
     1. Generate: [discounts-data-generator.py](/examples/csv/discounts-data-generator.py) simulates real-time data coming from external data sources and generates/updates existing `discounts.csv` file with random data. In reality, you can replace it with a database, API, or message broker.
-    2. Collect: The app reads the CSV file and its rows in real-time (when streaming mode is enabled) and maps each row into a structured document schema for better managing large data sets.
+    2. Collect: You upload the CSV file through the UI file-uploader and it maps each row into a jsonline schema for better managing large data sets.
     3. Chunk: Documents are split into short, mostly self-contained sections to be embedded.
     4. Embed: Each section is [embedded](https://platform.openai.com/docs/guides/embeddings) with the OpenAI API and retrieve the embedded result.
     5. Indexing: Constructs an index on the generated embeddings.
@@ -182,22 +173,7 @@ Install the required packages:
 pip install --upgrade -r requirements.txt
 ```
 
-### Step 4: Run Discounts data generator (optional)
-
-By default, the app uses the existing data in [discounts.csv](/examples/csv/data/discounts.csv) file . You can also run the [discounts-data-generator.py](/examples/csv/discounts-data-generator.py) Python script to update it. For example, you generate the second CSV file under data folder to test the app reaction on real-time data changes.  To do so:
-
-```python
-...
-# Change future_discounts.csv to future_discounts2.csv
-df.to_csv('./data/future_discounts2.csv', index=False)
-```
-
-```bash
-cd data
-python discounts-data-generator.py
-```
-
-### Step 5: Run and start to use it
+### Step 4: Run and start to use it
 
 You start the application by navigating to `llm_app` folder and run `main.py`:
 
@@ -209,7 +185,7 @@ When the application runs successfully, you should see output something like thi
 
 ![pathway_progress_dashboard](/assets/pathway_progress_dashboard.png)
 
-#### Add UI for file upload
+### Step 5: Run Streamlit UI for file upload
 
 You can run the UI seperately by navigating to `cd examples/csv/ui` and running Streamlit app
 `streamlit run app.py` command. It connects to the backend API automatically and you will see UI frontend is running on your browser:
@@ -218,19 +194,19 @@ You can run the UI seperately by navigating to `cd examples/csv/ui` and running 
 
 ## Test the sample app
 
-Assume that we have this entry on the CSV file:
+Assume that we have this entry on the CSV file (this can be any CSV file where the first raw has column names separated by commas):
 
 | discount_until | country | city | state | postal_code | region | product_id | category | sub_category | brand | product_name | currency | actual_price | discount_price | discount_percentage | address |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 2024-08-09 | USA | Los Angeles | IL | 22658 | Central | 7849 | Footwear | Men Shoes | Nike | Formal Shoes | USD | 130.67 | 117.60 | 10 | 321 Oak St |
 
-When the user has the following query with `curl` command:
+When the user uploads this file to the file uploader and asks questions:
 
-```bash
-curl --data '{"user": "user", "query": "Can you find me discounts this month for Nikes men shoes?"}' http://localhost:8080/
+```text
+Can you find me discounts this month for Nikes men shoes?
 ```
 
-You will get the response as its expected.
+You will get the response as its expected on the UI.
 
 ```text
 "Based on the given data, there is one discount available this month for Nike's men shoes. Here are the details::
