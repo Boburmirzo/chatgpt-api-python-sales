@@ -1,0 +1,11 @@
+discount_until,country,city,state,postal_code,region,product_id,category,sub_category,brand,product_name,currency,actual_price,discount_price,discount_percentage,address
+2024-03-20,USA,Los Angeles,IL,96922,West,5823,Footwear,Men Shoes,Reebok,Running Shoes,USD,138.0,98.0,29,789 Elm St
+2024-01-02,USA,San Francisco,NY,61515,East,5241,Footwear,Women Shoes,Reebok,Running Shoes,USD,112.0,95.0,15,456 Market St
+2024-06-27,USA,Los Angeles,IL,82016,South,5847,Footwear,Women Shoes,Puma,Running Shoes,USD,191.0,134.0,30,456 Market St
+2024-01-30,USA,San Francisco,CA,13592,Central,2852,Footwear,Men Shoes,Nike,Running Shoes,USD,82.0,71.0,13,321 Oak St
+2023-09-10,USA,New York,IL,90211,East,5374,Footwear,Women Shoes,Puma,Casual Shoes,USD,154.0,139.0,10,123 Main St
+2024-03-26,USA,Los Angeles,CA,21278,East,1216,Footwear,Women Shoes,Reebok,Formal Shoes,USD,148.0,130.0,12,789 Elm St
+2023-09-07,USA,San Francisco,IL,30785,Central,8626,Footwear,Women Shoes,Reebok,Casual Shoes,USD,59.0,49.0,17,123 Main St
+2024-01-06,USA,Los Angeles,NY,63819,West,5297,Footwear,Women Shoes,Reebok,Running Shoes,USD,145.0,107.0,26,456 Market St
+2024-04-06,USA,Los Angeles,IL,28389,Central,2259,Footwear,Men Shoes,Reebok,Running Shoes,USD,83.0,66.0,21,789 Elm St
+2023-09-19,USA,Los Angeles,CA,64616,West,6748,Footwear,Men Shoes,Nike,Formal Shoes,USD,199.0,145.0,27,100 Pine St
