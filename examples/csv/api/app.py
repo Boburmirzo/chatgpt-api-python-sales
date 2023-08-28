@@ -5,10 +5,10 @@ from common.prompt import prompt
 
 
 def run(host, port):
-    # Real-time data coming from external data sources such as csv file
+    # Real-time data coming from external data sources such as jsonlines file
     sales_data = pw.io.jsonlines.read(
         "./examples/csv/data",
-        schema=DiscountsInputSchema,
+        schema=DataInputSchema,
         mode="streaming"
     )
 
@@ -39,7 +39,7 @@ def run(host, port):
     pw.run()
 
 
-class DiscountsInputSchema(pw.Schema):
+class DataInputSchema(pw.Schema):
     doc: str
 
 
