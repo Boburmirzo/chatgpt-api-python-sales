@@ -1,0 +1,11 @@
+discount_until,country,city,state,postal_code,region,product_id,category,sub_category,brand,product_name,currency,actual_price,discount_price,discount_percentage,address
+2024-07-10,USA,Los Angeles,IL,90925,East,1705,Footwear,Women Shoes,Puma,Running Shoes,USD,113.0,85.0,25,321 Oak St
+2024-05-20,USA,San Francisco,IL,59794,West,3873,Footwear,Men Shoes,Reebok,Formal Shoes,USD,170.0,153.0,10,123 Main St
+2024-06-23,USA,San Francisco,IL,17631,Central,2719,Footwear,Men Shoes,Adidas,Casual Shoes,USD,194.0,159.0,18,789 Elm St
+2024-08-08,USA,San Francisco,IL,19446,Central,1088,Footwear,Women Shoes,Nike,Formal Shoes,USD,177.0,159.0,10,123 Main St
+2024-07-03,USA,Los Angeles,IL,55693,West,2346,Footwear,Women Shoes,Reebok,Running Shoes,USD,109.0,88.0,19,321 Oak St
+2023-10-04,USA,Los Angeles,IL,38958,Central,7043,Footwear,Men Shoes,Reebok,Running Shoes,USD,109.0,87.0,20,321 Oak St
+2024-08-07,USA,San Francisco,NY,58907,South,8764,Footwear,Women Shoes,Reebok,Casual Shoes,USD,87.0,61.0,30,789 Elm St
+2024-03-17,USA,San Francisco,NY,23889,South,3652,Footwear,Men Shoes,Nike,Running Shoes,USD,109.0,101.0,7,100 Pine St
+2024-06-21,USA,New York,NY,74726,South,3917,Footwear,Women Shoes,Puma,Formal Shoes,USD,58.0,45.0,22,456 Market St
+2023-11-22,USA,New York,CA,36358,West,6012,Footwear,Women Shoes,Reebok,Casual Shoes,USD,71.0,53.0,25,123 Main St
