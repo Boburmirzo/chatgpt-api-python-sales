@@ -17,6 +17,15 @@ Currently, the project supports two types of data sources and it is **possible t
 - Data and code reusability for offline evaluation. User has the option to choose to use local (cached) or real data.
 - Extend data sources: Using Pathway's built-in connectors for JSONLines, CSV, Kafka, Redpanda, Debezium, streaming APIs, and more.
 
+## Further Improvements
+
+There are more things you can achieve and here are upcoming features:
+
+- Incorporate additional data from external APIs, along with various files (such as Jsonlines, PDF, Doc, HTML, or Text format), databases like PostgreSQL or MySQL, and stream data from platforms like Kafka, Redpanda, or Debedizum.
+- Merge data from these sources instantly.
+- Maintain a data snapshot to observe variations in sales prices over time, as Pathway provides a built-in feature to compute **differences** between two alterations.
+- Beyond making data accessible via API or UI, the LLM App allows you to relay processed data to other downstream connectors, such as BI and analytics tools. For instance, set it up to **receive alerts** upon detecting price shifts.
+
 ## Demo
 
 In case you use Rainforest API as a data source for the project, it provides real-time deals for Amazon products.
