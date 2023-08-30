@@ -181,7 +181,7 @@ Install the required packages:
 ```bash
 pip install --upgrade -r requirements.txt
 ```
-### Step 4 (Optional): Run and start to use it
+### Step 4 (Optional): Create a new virtual environment
 
 Create a new virtual environment in the same folder and activate that environment:
 
