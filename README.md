@@ -155,13 +155,10 @@ cd chatgpt-api-python-sales
 
 ### Step 2: Set environment variables
 
-Create `.env` file in the root directory of the project, copy and paste below config and replace `{OPENAI_API_KEY}` configuration value with your key.
-Optionally, you change other values.  By default the app uses [Mock API response](https://run.mocky.io/v3/f17d8811-09ff-4ba6-8d14-31ef972ce6cd/request) to simulate response from Rainforest API. If you need actual data, you need to specify also `{RAINFOREST_BASE_URL}` and `{RAINFOREST_API_KEY}`.
+Create `.env` file in the root directory of the project, copy and paste the below config, and replace the `{OPENAI_API_KEY}` configuration value with your key. 
 
 ```bash
 OPENAI_API_TOKEN={OPENAI_API_KEY}
-RAINFOREST_BASE_URL={RAINFOREST_BASE_URL}
-RAINFOREST_API_KEY={RAINFOREST_API_KEY}
 HOST=0.0.0.0
 PORT=8080
 EMBEDDER_LOCATOR=text-embedding-ada-002
@@ -169,6 +166,12 @@ EMBEDDING_DIMENSION=1536
 MODEL_LOCATOR=gpt-3.5-turbo
 MAX_TOKENS=200
 TEMPERATURE=0.0
+```
+Optionally, you change other values. By default, the app uses [Mock API response](https://run.mocky.io/v3/f17d8811-09ff-4ba6-8d14-31ef972ce6cd/request) to simulate the response from Rainforest API. If you need actual data, you need to specify also `{RAINFOREST_BASE_URL}` and `{RAINFOREST_API_KEY}`.
+
+```bash
+RAINFOREST_BASE_URL={RAINFOREST_BASE_URL}
+RAINFOREST_API_KEY={RAINFOREST_API_KEY}
 ```
 
 ### Step 3: Install the app dependencies
