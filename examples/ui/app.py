@@ -65,7 +65,7 @@ elif os.path.exists(rainforest_path):
 if DataSource.CSV.value not in data_sources and os.path.exists(csv_path):
     os.remove(csv_path)
 
-# Handle API request if data source is selected and a question is provided
+# Handle Discounts API request if data source is selected and a question is provided
 if data_sources and question:
     url = f'http://{api_host}:{api_port}/'
     data = {"query": question}
@@ -76,4 +76,4 @@ if data_sources and question:
         st.write("### Answer")
         st.write(response.json())
     else:
-        st.error(f"Failed to send data to API. Status code: {response.status_code}")
+        st.error(f"Failed to send data to Discounts API. Status code: {response.status_code}")

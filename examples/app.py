@@ -13,7 +13,7 @@ def run(host, port):
         autocommit_duration_ms=50,
     )
 
-    # Real-time data coming from external data sources such as csv file
+    # Real-time data coming from external data sources such as jsonlines file
     sales_data = pw.io.jsonlines.read(
         "./examples/data",
         schema=DataInputSchema,

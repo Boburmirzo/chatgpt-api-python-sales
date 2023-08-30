@@ -5,7 +5,7 @@ exposes an HTTP REST endpoint to answer user queries about current sales like [A
 
 Currently, the project supports two types of data sources and it is **possible to extend sources** by adding custom input connectors:
 
-- Jsonlines - The Data source expects to have a `doc` object for each line. Make sure that you convert your input data first to Jsonlines. See a sample data in [discounts.jsonl](/examples/csv/data/discounts.jsonl)
+- Jsonlines - The Data source expects to have a `doc` object for each line. Make sure that you convert your input data first to Jsonlines. See a sample data in [discounts.jsonl](/examples/data/csv_discounts.jsonl)
 - [Rainforest Product API](https://www.rainforestapi.com/docs/product-data-api/overview).
 
 ## Features
@@ -23,6 +23,7 @@ There are more things you can achieve and here are upcoming features:
 
 - Incorporate additional data from external APIs, along with various files (such as Jsonlines, PDF, Doc, HTML, or Text format), databases like PostgreSQL or MySQL, and stream data from platforms like Kafka, Redpanda, or Debedizum.
 - Merge data from these sources instantly.
+- Convert any data to jsonlines.
 - Maintain a data snapshot to observe variations in sales prices over time, as Pathway provides a built-in feature to compute **differences** between two alterations.
 - Beyond making data accessible via API or UI, the LLM App allows you to relay processed data to other downstream connectors, such as BI and analytics tools. For instance, set it up to **receive alerts** upon detecting price shifts.
 
@@ -48,6 +49,13 @@ As evident, ChatGPT interface offers general advice on locating discounts but la
 It requires only few lines of code to build a real-time AI-enabled data pipeline:
 
 ```python
+# Given a user question as a query from your API
+query, response_writer = pw.io.http.rest_connector(
+    host=host,
+    port=port,
+    schema=QueryInputSchema,
+    autocommit_duration_ms=50,
+)
 # Real-time data coming from external data sources such as jsonlines file
 sales_data = pw.io.jsonlines.read(
     "./examples/data",
@@ -58,13 +66,6 @@ sales_data = pw.io.jsonlines.read(
 embedded_data = embeddings(context=sales_data, data_to_embed=sales_data.doc)
 # Construct an index on the generated embeddings in real-time
 index = index_embeddings(embedded_data)
-# Given a user question as a query from your API
-query, response_writer = pw.io.http.rest_connector(
-    host=host,
-    port=port,
-    schema=QueryInputSchema,
-    autocommit_duration_ms=50,
-)
 # Generate embeddings for the query from the OpenAI Embeddings API
 embedded_query = embeddings(context=query, data_to_embed=pw.this.query)
 # Build prompt using indexed data
@@ -102,19 +103,19 @@ As you can see, GPT responds only with suggestions on how to find discounts but 
 
 To help the model, we give knowledge of discount information from any reliable data source (it can be JSON document, APIs, or data stream in Kafka) to get a more accurate answer. Assume that there is a `discounts.csv` file with the following columns of data: *discount_until, country, city, state, postal_code ,region, product_id, category, sub_category, brand, product_name, currency,actual_price ,discount_price, discount_percentage ,address*.
 
-After we give this knowledge to GPT using UI drag and drop, look how it replies:
+After we give this knowledge to GPT using UI (applying a data source), look how it replies:
 
-![ChatGPT needs custom data 2](/assets//Streamlit%20CSV%20File%20uploader.gif)
+![Discounts two data sources](/assets/Discounts%20two%20data%20sources.gif)
 
-The app takes `discounts.csv` file and indexed documents into account and uses this data when processing queries. The cool part is, the app is always aware of changes in the discounts. If you add another CSV file or data source, the LLM app does magic and automatically updates the AI model's response.
+The app takes both [Rainforest API](https://www.rainforestapi.com/docs/product-data-api/overview) and `discounts.csv` file and indexed documents into account and uses this data when processing queries. The cool part is, the app is always aware of changes in the discounts. If you add another CSV file or data source, the LLM app does magic and automatically updates the AI model's response.
 
 ## How the project works
 
 The sample project does the following procedures to achieve the above output:
 
 1. Prepare search data:
-    1. Generate: [discounts-data-generator.py](/examples/csv/discounts-data-generator.py) simulates real-time data coming from external data sources and generates/updates existing `discounts.csv` file with random data. In reality, you can replace it with a database, API, or message broker.
-    2. Collect: You upload the CSV file through the UI file-uploader and it maps each row into a jsonline schema for better managing large data sets.
+    1. Generate: [discounts-data-generator.py](/examples/csv/discounts-data-generator.py) simulates real-time data coming from external data sources and generates/updates existing `discounts.csv` file with random data. There is also cron job is running using [Crontab](https://pypi.org/project/python-crontab/) and it runs every min to fetch latest data from Rainforest API.
+    2. Collect: You choose a data source or upload the CSV file through the UI file-uploader and it maps each row into a jsonline schema for better managing large data sets.
     3. Chunk: Documents are split into short, mostly self-contained sections to be embedded.
     4. Embed: Each section is [embedded](https://platform.openai.com/docs/guides/embeddings) with the OpenAI API and retrieve the embedded result.
     5. Indexing: Constructs an index on the generated embeddings.
@@ -155,11 +156,9 @@ cd chatgpt-api-python-sales
 ### Step 2: Set environment variables
 
 Create `.env` file in the root directory of the project, copy and paste below config and replace `{OPENAI_API_KEY}` configuration value with your key.
-Optionally, you change other values. `APP_VARIANT=csv.api` means the app uses csv file as a data source and exposes API endpoint to query this data.
-If you change it to `APP_VARIANT=rainforest` it uses Rainforest API as a data source. In this case, you need to specify also `{RAINFOREST_BASE_URL}` and `{RAINFOREST_API_KEY}`. By default the app uses [Mock API response](https://run.mocky.io/v3/f17d8811-09ff-4ba6-8d14-31ef972ce6cd/request).
+Optionally, you change other values.  By default the app uses [Mock API response](https://run.mocky.io/v3/f17d8811-09ff-4ba6-8d14-31ef972ce6cd/request) to simulate response from Rainforest API. If you need actual data, you need to specify also `{RAINFOREST_BASE_URL}` and `{RAINFOREST_API_KEY}`.
 
 ```bash
-APP_VARIANT=csv.api
 OPENAI_API_TOKEN={OPENAI_API_KEY}
 RAINFOREST_BASE_URL={RAINFOREST_BASE_URL}
 RAINFOREST_API_KEY={RAINFOREST_API_KEY}
@@ -194,14 +193,14 @@ When the application runs successfully, you should see output something like thi
 
 ### Step 5: Run Streamlit UI for file upload
 
-You can run the UI seperately by navigating to `cd examples/csv/ui` and running Streamlit app
-`streamlit run app.py` command. It connects to the backend API automatically and you will see UI frontend is running on your browser:
+You can run the UI seperately by navigating to `cd examples/ui` and running Streamlit app
+`streamlit run app.py` command. It connects to the Discounts backend API automatically and you will see UI frontend is running on your browser:
 
-![screenshot_ui_streamlit](/assets/screenshot_ui_streamlit.png)
+![screenshot_ui_streamlit](/assets/streamlit_ui_pathway.png)
 
 ## Test the sample app
 
-Assume that we have this entry on the CSV file (this can be any CSV file where the first raw has column names separated by commas):
+Assume that you choose CSV as a data source and we have this entry on the CSV file (this can be any CSV file where the first raw has column names separated by commas):
 
 | discount_until | country | city | state | postal_code | region | product_id | category | sub_category | brand | product_name | currency | actual_price | discount_price | discount_percentage | address |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
