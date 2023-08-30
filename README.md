@@ -181,10 +181,17 @@ Install the required packages:
 ```bash
 pip install --upgrade -r requirements.txt
 ```
+### Step 4 (Optional): Run and start to use it
 
-### Step 4: Run and start to use it
+Create a new virtual environment in the same folder and activate that environment:
 
-You start the application by navigating to `llm_app` folder and run `main.py`:
+```bash
+python -m venv pw-env && source pw-env/bin/activate
+```
+
+### Step 5: Run and start to use it
+
+You start the application by navigating to `llm_app` folder and running `main.py`:
 
 ```bash
 python main.py
@@ -194,16 +201,16 @@ When the application runs successfully, you should see output something like thi
 
 ![pathway_progress_dashboard](/assets/pathway_progress_dashboard.png)
 
-### Step 5: Run Streamlit UI for file upload
+### Step 6: Run Streamlit UI for file upload
 
-You can run the UI seperately by navigating to `cd examples/ui` and running Streamlit app
-`streamlit run app.py` command. It connects to the Discounts backend API automatically and you will see UI frontend is running on your browser:
+You can run the UI separately by navigating to `cd examples/ui` and running Streamlit app
+`streamlit run app.py` command. It connects to the Discounts backend API automatically and you will see the UI frontend is running on your browser:
 
 ![screenshot_ui_streamlit](/assets/streamlit_ui_pathway.png)
 
 ## Test the sample app
 
-Assume that you choose CSV as a data source and we have this entry on the CSV file (this can be any CSV file where the first raw has column names separated by commas):
+Assume that you choose CSV as a data source and we have this entry on the CSV file (this can be any CSV file where the first row has column names separated by commas):
 
 | discount_until | country | city | state | postal_code | region | product_id | category | sub_category | brand | product_name | currency | actual_price | discount_price | discount_percentage | address |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
