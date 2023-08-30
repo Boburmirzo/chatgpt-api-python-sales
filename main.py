@@ -14,6 +14,6 @@ if __name__ == "__main__":
     host = os.environ.get("HOST", "0.0.0.0")
     port = int(os.environ.get("PORT", 8080))
 
-    app = importlib.import_module("examples.app")
+    app = importlib.import_module("examples.api.app")
 
     app.run(host=host, port=port)
