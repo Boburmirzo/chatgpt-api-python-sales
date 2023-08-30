@@ -1,19 +1,23 @@
 import importlib
 import os
 from dotenv import load_dotenv
-from crontab import CronTab
+import subprocess
 
 load_dotenv()
 
-cron = CronTab(user=True)
-job = cron.new(command='python3 examples/rainforest/data_ingestion_cron_job.py')
-job.minute.every(1)
-cron.write()
-
 if __name__ == "__main__":
+    # Fetch data from Rainforest API
+    try:
+        cmd = ["python3", "examples/rainforest/data_ingestion_cron_job.py"]
+
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError:
+        print("Script execution failed.")
+    except FileNotFoundError:
+        print("Python interpreter or the script was not found.")
+
+    # Run Discounts API
     host = os.environ.get("HOST", "0.0.0.0")
     port = int(os.environ.get("PORT", 8080))
-
-    app = importlib.import_module("examples.api.app")
-
-    app.run(host=host, port=port)
+    app_api = importlib.import_module("examples.api.app")
+    app_api.run(host=host, port=port)
