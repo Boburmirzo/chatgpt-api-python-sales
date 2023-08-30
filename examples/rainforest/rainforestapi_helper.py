@@ -38,7 +38,7 @@ def send_request(data_dir, params):
                 deal['deal_price'] = deal.get('deal_price', {}).get('value', '')
                 deal['old_price'] = deal.get('list_price', {}).get('value', '')
                 deal['currency'] = deal.get('list_price', {}).get('currency', '')
-
-                file.write(json.dumps(deal) + '\n')
+                doc_object = {"doc": str(deal)}
+                file.write(json.dumps(doc_object) + '\n')
     else:
         print(f"Failed to fetch data. Status code: {response.status_code}")
