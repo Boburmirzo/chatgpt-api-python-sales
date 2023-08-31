@@ -130,6 +130,12 @@ The sample project does the following procedures to achieve the above output:
 
 Example only supports Unix-like systems (such as Linux, macOS, BSD). If you are a Windows user, we highly recommend leveraging Windows Subsystem for Linux (WSL) or Dockerize the app to run as a container.
 
+### Run with Docker
+
+1. [Set environment variables](#step-2-set-environment-variables)
+2. From the project root folder, open your terminal and run `docker compose up`.
+3. Navigate to `localhost:8501` on your browser when docker installion is successful.
+
 ### Prerequisites
 
 1. Make sure that [Python](https://www.python.org/downloads/) 3.10 or above installed on your machine.
@@ -167,6 +173,7 @@ MODEL_LOCATOR=gpt-3.5-turbo
 MAX_TOKENS=200
 TEMPERATURE=0.0
 ```
+
 Optionally, you change other values. By default, the app uses [Mock API response](https://run.mocky.io/v3/f17d8811-09ff-4ba6-8d14-31ef972ce6cd/request) to simulate the response from Rainforest API. If you need actual data, you need to specify also `{RAINFOREST_BASE_URL}` and `{RAINFOREST_API_KEY}`.
 
 ```bash
