@@ -9,7 +9,7 @@ load_dotenv()
 
 api_key = os.environ.get("RAINFOREST_API_KEY", "")
 # Mock Rainforest API response if base_url is not specified
-base_url = os.environ.get("RAINFOREST_BASE_URL", "https://run.mocky.io/v3/db4dbb0a-b3da-4645-8bd0-5ef83b6afcf3/request")
+base_url = os.environ.get("RAINFOREST_BASE_URL", "https://run.mocky.io/v3/c758d798-48aa-42eb-b2d2-8303c2b7542f/request")
 
 base_params = {
     "api_key": api_key,
