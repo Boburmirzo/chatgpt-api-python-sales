@@ -11,9 +11,9 @@ def prompt(index, embedded_query, user_query):
         prompt = f"Given the following data: \n {docs_str} \nanswer this query: {query}, Assume that current date is: {datetime.now()}. and clean the output"
         return prompt
 
-    query_context = index.query(embedded_query, k=3).select(
-        user_query, local_indexed_data_list=pw.this.result
-    )
+    query_context = embedded_query + index.get_nearest_items(
+        embedded_query.vector, k=3, collapse_rows=True
+    ).select(local_indexed_data_list=pw.this.doc).promise_universe_is_equal_to(embedded_query)
 
     prompt = query_context.select(
         prompt=build_prompt(pw.this.local_indexed_data_list, user_query)
