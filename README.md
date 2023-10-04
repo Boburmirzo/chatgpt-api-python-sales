@@ -128,13 +128,7 @@ The sample project does the following procedures to achieve the above output:
 
 ## How to run the project
 
-Example only supports Unix-like systems (such as Linux, macOS, BSD). If you are a Windows user, we highly recommend leveraging Windows Subsystem for Linux (WSL) or Dockerize the app to run as a container.
-
-### Run with Docker
-
-1. [Set environment variables](#step-2-set-environment-variables)
-2. From the project root folder, open your terminal and run `docker compose up`.
-3. Navigate to `localhost:8501` on your browser when docker installion is successful.
+Example only supports Unix-like systems (such as Linux, macOS, BSD). If you are a Windows user, we highly recommend leveraging Windows Subsystem for Linux (WSL) or [Dockerize the app](#run-with-docker) to run as a container.
 
 ### Prerequisites
 
@@ -181,14 +175,7 @@ RAINFOREST_BASE_URL={RAINFOREST_BASE_URL}
 RAINFOREST_API_KEY={RAINFOREST_API_KEY}
 ```
 
-### Step 3: Install the app dependencies
-
-Install the required packages:
-
-```bash
-pip install --upgrade -r requirements.txt
-```
-### Step 4 (Optional): Create a new virtual environment
+### Step 3 (Optional): Create a new virtual environment
 
 Create a new virtual environment in the same folder and activate that environment:
 
@@ -196,9 +183,18 @@ Create a new virtual environment in the same folder and activate that environmen
 python -m venv pw-env && source pw-env/bin/activate
 ```
 
+### Step 4: Install the app dependencies
+
+Install the required packages:
+
+```bash
+pip install --upgrade -r requirements.txt
+```
+
+
 ### Step 5: Run and start to use it
 
-You start the application by navigating to `llm_app` folder and running `main.py`:
+Start the application by running `main.py`:
 
 ```bash
 python main.py
@@ -249,3 +245,9 @@ Discounted Price: $117.60
 Discount Percentage: 10%
 Ship Date: 2024-08-09
 ```
+
+### Run with Docker (for Windows users)
+
+1. [Set environment variables](#step-2-set-environment-variables)
+2. From the project root folder, open your terminal and run `docker compose up`.
+3. Navigate to `localhost:8501` on your browser when docker installion is successful.
