@@ -211,7 +211,7 @@ When the application runs successfully, you should see output something like thi
 ### Step 6: Run Streamlit UI for file upload
 
 You can run the UI separately by navigating to `cd examples/ui` and running Streamlit app
-`streamlit run app.py` command. It connects to the Discounts backend API automatically and you will see the UI frontend is running on your browser:
+`streamlit run app.py` command. It connects to the Discounts backend API automatically and you will see the UI frontend is running http://localhost:8501/ on a browser:
 
 ![screenshot_ui_streamlit](/assets/streamlit_ui_pathway.png)
 
